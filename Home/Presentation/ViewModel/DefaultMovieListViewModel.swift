@@ -13,16 +13,19 @@ protocol MovieListViewModel {
 
 final class DefaultMovieListViewModel: MovieListViewModel {
 
+    let movieListUseCase: MovieListUseCase
+
+    init(movieListUseCase: MovieListUseCase) {
+        self.movieListUseCase = movieListUseCase
+    }
+
     func fetchMovies() {
         Task {
-            let result: Result<MovieListResponse, APIError> = try await APIClient.shared.performRequest(
-                with: MovieEndPoints.nowPlaying(page: 1)
-            )
-            switch result {
-            case .success(let movieList):
-                debugPrint(movieList)
-            case .failure(let failure):
-                debugPrint("Error is ", failure.message)
+            let (result, error) = try await movieListUseCase.fetchMovieList()
+            if error == .success {
+                print(result)
+            }else {
+                print(error.message)
             }
         }
     }

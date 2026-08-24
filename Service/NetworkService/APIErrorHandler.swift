@@ -7,6 +7,7 @@
 
 enum APIError: Error {
 
+    case success
     case noInternetConnection
     case invalidURL
     case parsingError
@@ -20,6 +21,7 @@ enum APIError: Error {
 
     var message: String {
         switch self {
+            case .success: return "Success"
             case .noInternetConnection: return "Your device is offline. Please check your Wi-Fi or cellular data."
             case .invalidURL: return "This link couldn’t be opened. Please check it and try again."
             case .parsingError: return "We couldn't process the information. Please update the app."

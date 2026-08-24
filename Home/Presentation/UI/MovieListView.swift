@@ -22,7 +22,6 @@ struct MovieListView: View {
                 viewModel.fetchMovies()
             }
     }
-
 }
 
 #if DEBUG

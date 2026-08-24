@@ -12,7 +12,7 @@ import SwiftData
 struct CineVerseApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: DefaultMovieListViewModel())
+            MovieListScreenBuilder.makeView()
         }
     }
 }
