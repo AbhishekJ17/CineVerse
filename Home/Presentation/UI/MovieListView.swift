@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct MovieListView: View {
 
     var viewModel: MovieListViewModel
 
@@ -27,6 +27,8 @@ struct ContentView: View {
 
 #if DEBUG
 #Preview {
-    ContentView(viewModel: DefaultMovieListViewModel())
+    let repository: MovieListRepository = DefaultMovieListRepository()
+    let useCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
+    MovieListView(viewModel: DefaultMovieListViewModel(movieListUseCase: useCase))
 }
 #endif
