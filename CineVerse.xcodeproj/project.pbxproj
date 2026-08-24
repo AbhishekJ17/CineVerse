@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		849A1282300AA95D00CA3279 /* Movie-NowPlaying.json in Sources */ = {isa = PBXBuildFile; fileRef = 849A1281300AA95500CA3279 /* Movie-NowPlaying.json */; };
+		849A1284300AA9B700CA3279 /* Movie-Popular.json in Sources */ = {isa = PBXBuildFile; fileRef = 849A1283300AA9B200CA3279 /* Movie-Popular.json */; };
+		84B569A430381EF0002E906F /* Movie-TopRate.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B569A230381EF0002E906F /* Movie-TopRate.json */; };
+		84B569A530381EF0002E906F /* Movie-Upcoming.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B569A330381EF0002E906F /* Movie-Upcoming.json */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		8408774B2FF3D47C00B208A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +34,10 @@
 		8408773B2FF3D47A00B208A5 /* CineVerse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CineVerse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8408774A2FF3D47C00B208A5 /* CineVerseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CineVerseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		840877542FF3D47C00B208A5 /* CineVerseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CineVerseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		849A1281300AA95500CA3279 /* Movie-NowPlaying.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Movie-NowPlaying.json"; sourceTree = "<group>"; };
+		849A1283300AA9B200CA3279 /* Movie-Popular.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Movie-Popular.json"; sourceTree = "<group>"; };
+		84B569A230381EF0002E906F /* Movie-TopRate.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Movie-TopRate.json"; sourceTree = "<group>"; };
+		84B569A330381EF0002E906F /* Movie-Upcoming.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Movie-Upcoming.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -43,6 +54,16 @@
 		840877572FF3D47C00B208A5 /* CineVerseUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CineVerseUITests;
+			sourceTree = "<group>";
+		};
+		849A127A300AA90D00CA3279 /* Home */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Home;
+			sourceTree = "<group>";
+		};
+		849A128B300AAA4F00CA3279 /* Service */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +96,12 @@
 		840877322FF3D47A00B208A5 = {
 			isa = PBXGroup;
 			children = (
+				84B569A230381EF0002E906F /* Movie-TopRate.json */,
+				84B569A330381EF0002E906F /* Movie-Upcoming.json */,
+				849A1283300AA9B200CA3279 /* Movie-Popular.json */,
+				849A1281300AA95500CA3279 /* Movie-NowPlaying.json */,
+				849A128B300AAA4F00CA3279 /* Service */,
+				849A127A300AA90D00CA3279 /* Home */,
 				8408773D2FF3D47A00B208A5 /* CineVerse */,
 				8408774D2FF3D47C00B208A5 /* CineVerseTests */,
 				840877572FF3D47C00B208A5 /* CineVerseUITests */,
@@ -109,6 +136,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				8408773D2FF3D47A00B208A5 /* CineVerse */,
+				849A127A300AA90D00CA3279 /* Home */,
+				849A128B300AAA4F00CA3279 /* Service */,
 			);
 			name = CineVerse;
 			packageProductDependencies = (
@@ -212,6 +241,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B569A430381EF0002E906F /* Movie-TopRate.json in Resources */,
+				84B569A530381EF0002E906F /* Movie-Upcoming.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +267,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849A1284300AA9B700CA3279 /* Movie-Popular.json in Sources */,
+				849A1282300AA95D00CA3279 /* Movie-NowPlaying.json in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
