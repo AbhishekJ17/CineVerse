@@ -19,15 +19,14 @@ struct MovieListView: View {
     var body: some View {
         Text("CineVerse")
             .onAppear {
-                viewModel.fetchMovies()
+                viewModel.fetchMovies(page: 1)
             }
     }
 }
 
 #if DEBUG
 #Preview {
-    let repository: MovieListRepository = DefaultMovieListRepository()
-    let useCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
-    MovieListView(viewModel: DefaultMovieListViewModel(movieListUseCase: useCase))
+    let viewModel: MovieListViewModel = DefaultMovieListViewModel()
+    MovieListView(viewModel: viewModel)
 }
 #endif

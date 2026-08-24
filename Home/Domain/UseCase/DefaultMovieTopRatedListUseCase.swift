@@ -1,20 +1,22 @@
 //
-//  DefaultMovieListUseCase.swift
+//  DefaultMovieTopRatedListUseCase.swift
 //  CineVerse
 //
 //  Created by Admin on 24/08/26.
 //
 
-class DefaultMovieListUseCase: MovieListUseCase {
-    
+class DefaultMovieTopRatedListUseCase: MovieListUseCase {
+
     private let repository: MovieListRepository
 
     init(repository: MovieListRepository) {
         self.repository = repository
     }
 
-    func fetchMovieList() async throws -> (MovieListResponse?, APIError) {
-        let result: Result<MovieListResponse, APIError> = try await repository.fetchMovieList(endPoint: MovieEndPoints.nowPlaying(page: 1))
+    func fetchMovieList(page: Int) async throws -> (MovieListResponse?, APIError) {
+        let result: Result<MovieListResponse, APIError> = try await repository.fetchMovieList(
+            endPoint: MovieEndPoints.topRated(page: page)
+        )
         switch result {
         case .success(let movieList):
             return (movieList, .success)
@@ -22,5 +24,4 @@ class DefaultMovieListUseCase: MovieListUseCase {
             return (nil, failure)
         }
     }
-
 }

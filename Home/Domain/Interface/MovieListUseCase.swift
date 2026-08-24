@@ -6,5 +6,8 @@
 //
 
 protocol MovieListUseCase {
-    func fetchMovieList() async throws -> (MovieListResponse?, APIError)
+    func fetchMovieList(page: Int) async throws -> (
+        MovieListResponse?,
+        APIError
+    )
 }
