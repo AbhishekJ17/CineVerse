@@ -21,8 +21,24 @@ struct MovieListView: View {
             ZStack {
                 BackgroundView()
                 ScrollView {
-                    Text(CineVerseText.cineVerseTitle)
-                    Text(CineVerseText.cineVerseTitle)
+                    LazyVStack(spacing: 20) {
+                        VStack(alignment: .leading, spacing: 5) {
+                            SectionHeadline(headline: "Now Playing")
+                            HeroStoryCard()
+                        }
+                        VStack(alignment: .leading, spacing: 5) {
+                            SectionHeadline(headline: "Popular")
+                            HeroStoryCard()
+                        }
+                        VStack(alignment: .leading, spacing: 5) {
+                            SectionHeadline(headline: "Top-Rated")
+                            HeroStoryCard()
+                        }
+                        VStack(alignment: .leading, spacing: 5) {
+                            SectionHeadline(headline: "Upcoming")
+                            HeroStoryCard()
+                        }
+                    }
                 }
             }
             .navigationTitle(CineVerseText.cineVerseTitle)

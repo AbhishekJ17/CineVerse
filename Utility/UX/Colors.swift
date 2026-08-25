@@ -7,5 +7,10 @@
 import SwiftUI
 
 public enum CineVersePalette {
-    static let backgroundColor = Color("BackgroundColor")
+    static let background = Color("BackgroundColor")
+    static let accentPrimary = Color("AccentPrimary")
+    static let accentSecondary = Color("AccentSecondary")
+    static let surfaceCard = Color("SurfaceCard")
+    static let textMuted = Color("TextMuted")
+    static let textPrimary = Color("TextPrimary")
 }

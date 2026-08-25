@@ -40,9 +40,22 @@
 		84B569A330381EF0002E906F /* Movie-Upcoming.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Movie-Upcoming.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		84B56A46303D9C94002E906F /* Exceptions for "CineVerse" folder in "CineVerse" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8408773A2FF3D47A00B208A5 /* CineVerse */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8408773D2FF3D47A00B208A5 /* CineVerse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				84B56A46303D9C94002E906F /* Exceptions for "CineVerse" folder in "CineVerse" target */,
+			);
 			path = CineVerse;
 			sourceTree = "<group>";
 		};
@@ -440,6 +453,7 @@
 				DEVELOPMENT_TEAM = WD392S3H29;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CineVerse/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -472,6 +486,7 @@
 				DEVELOPMENT_TEAM = WD392S3H29;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CineVerse/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
