@@ -66,6 +66,11 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		84B569D0303D8077002E906F /* Utility */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utility;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +106,7 @@
 				849A1283300AA9B200CA3279 /* Movie-Popular.json */,
 				849A1281300AA95500CA3279 /* Movie-NowPlaying.json */,
 				849A128B300AAA4F00CA3279 /* Service */,
+				84B569D0303D8077002E906F /* Utility */,
 				849A127A300AA90D00CA3279 /* Home */,
 				8408773D2FF3D47A00B208A5 /* CineVerse */,
 				8408774D2FF3D47C00B208A5 /* CineVerseTests */,
@@ -138,6 +144,7 @@
 				8408773D2FF3D47A00B208A5 /* CineVerse */,
 				849A127A300AA90D00CA3279 /* Home */,
 				849A128B300AAA4F00CA3279 /* Service */,
+				84B569D0303D8077002E906F /* Utility */,
 			);
 			name = CineVerse;
 			packageProductDependencies = (

@@ -17,10 +17,16 @@ struct MovieListView: View {
     }
 
     var body: some View {
-        Text("CineVerse")
-            .onAppear {
-                viewModel.fetchMovies(page: 1)
+        NavigationView {
+            ZStack {
+                BackgroundView()
+                ScrollView {
+                    Text(CineVerseText.cineVerseTitle)
+                    Text(CineVerseText.cineVerseTitle)
+                }
             }
+            .navigationTitle(CineVerseText.cineVerseTitle)
+        }
     }
 }
 
