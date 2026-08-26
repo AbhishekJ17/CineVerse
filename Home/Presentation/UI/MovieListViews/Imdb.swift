@@ -17,7 +17,11 @@ struct Imdb: View {
             Text(String(format: "%g", rating))
                 .font(.setBlackFontWith(size: 12))
         }
+        .padding(.horizontal, 5)
+        .padding(.vertical, 5)
+        .background(Color.accentSecondary).opacity(0.7)
         .foregroundStyle(.textPrimary)
+        .cornerRadius(5)
     }
 }
 

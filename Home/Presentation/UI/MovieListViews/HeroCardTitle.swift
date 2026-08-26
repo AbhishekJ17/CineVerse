@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HeroCardTitle: View {
 
-    var title: String = "The GodFather: A New Era"
+    var title: String
     var body: some View {
         Text(title)
             .font(.setBlackFontWith(size: 20))

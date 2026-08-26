@@ -16,9 +16,8 @@ struct HeroStoryCard: View {
                     .padding(.leading, 10)
             }            
             .overlay(alignment: .bottomLeading) {
-
                 VStack(alignment: .leading, spacing: 5) {
-                    HeroCardTitle()
+                    HeroCardTitle(title: "The GodFather: A New Era")
                     HStack(alignment: .center, spacing: 10) {
                         Imdb(rating: 7.9)
                         WatchTrailerButton()
