@@ -11,8 +11,7 @@ struct HeroImage: View {
     var body: some View {
         Image("backdrop_path")
             .resizable()
-            .aspectRatio(5/4, contentMode: .fit)
-            .cornerRadius(15)            
+            .aspectRatio(contentMode: .fill)                       
     }
 }
 

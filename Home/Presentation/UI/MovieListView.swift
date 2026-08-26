@@ -11,6 +11,13 @@ import SwiftData
 struct MovieListView: View {
 
     var viewModel: MovieListViewModel
+    let columns: [GridItem] = [
+        GridItem(.flexible(), spacing: 5, alignment: nil),
+        GridItem(.flexible(), spacing: 5, alignment: nil)
+    ]
+    let rows: [GridItem] = [
+        GridItem(.flexible(), spacing: nil, alignment: nil)
+    ]
 
     init(viewModel: MovieListViewModel) {
         self.viewModel = viewModel
@@ -18,33 +25,14 @@ struct MovieListView: View {
 
     var body: some View {
         NavigationView {
-            ZStack {
+            ZStack(alignment: .top) {
                 BackgroundView()
-                ScrollView {
-                    LazyVStack(spacing: 20) {
-                        VStack(alignment: .leading, spacing: 5) {
-                            SectionHeadline(headline: "Now Playing")
-                            HeroStoryCard()
-                            SectionHeadline(headline: "Top Rated")
-                            HStack(spacing: 5) {
-                                BannerShelfRow()
-                                BannerShelfRow()
-                            }
-                            SectionHeadline(headline: "Popular")
-                            HStack(spacing: 5) {
-                                ShelfRow()
-                                ShelfRow()
-                                ShelfRow()
-                            }
-                            SectionHeadline(headline: "Upcoming")
-                            HStack(spacing: 5) {
-                                ShelfRow()
-                                ShelfRow()
-                            }
-                        }
-                        .padding(.horizontal, 15)
-                    }
+
+                VStack(alignment: .leading) {
+                    SectionHeadline(headline: "Now playing")
+                    BannerShelfRow()
                 }
+                .padding(.leading, 20)
             }
             .navigationTitle(CineVerseText.cineVerseTitle)
         }

@@ -13,7 +13,6 @@ struct SectionHeadline: View {
     var body: some View {
         Text(headline)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 15)
             .foregroundStyle(.textPrimary)
             .font(.setBlackFontWith(size: 25))
     }
