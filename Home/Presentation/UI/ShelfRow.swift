@@ -10,8 +10,7 @@ import SwiftUI
 struct ShelfRow: View {
     var body: some View {
         ZStack {
-            BackgroundView()
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(spacing: 5) {
                 ShelfImage()
                 ShelfMetadataView(title: "The GodFather: A New Era", rating: 7.9)
             }

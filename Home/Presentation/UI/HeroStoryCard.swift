@@ -26,7 +26,6 @@ struct HeroStoryCard: View {
                 .padding(.bottom, 10)
                 .padding(.leading, 15)
             }
-            .padding(.horizontal, 15)
     }
 }
 

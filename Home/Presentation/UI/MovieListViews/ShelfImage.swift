@@ -11,7 +11,8 @@ struct ShelfImage: View {
     var body: some View {
         Image("poster_path")
             .resizable()
-            .aspectRatio(1/1, contentMode: .fit)
+            .aspectRatio(contentMode: .fill)
+            .frame(width: 140, height: 160)
             .cornerRadius(5.0)
     }
 }

@@ -25,30 +25,24 @@ struct MovieListView: View {
                         VStack(alignment: .leading, spacing: 5) {
                             SectionHeadline(headline: "Now Playing")
                             HeroStoryCard()
-                        }
-                        VStack(alignment: .leading, spacing: 5) {
-                            SectionHeadline(headline: "Popular")
-                            HStack(alignment: .center) {
-                                ShelfRow()
-                                ShelfRow()
-                                ShelfRow()
-                            }
-                        }
-                        VStack(alignment: .leading, spacing: 5) {
                             SectionHeadline(headline: "Top Rated")
-                            HStack(alignment: .center) {
+                            HStack(spacing: 5) {
+                                BannerShelfRow()
+                                BannerShelfRow()
+                            }
+                            SectionHeadline(headline: "Popular")
+                            HStack(spacing: 5) {
                                 ShelfRow()
                                 ShelfRow()
                                 ShelfRow()
                             }
-                        }
-                        VStack(alignment: .leading, spacing: 5) {
                             SectionHeadline(headline: "Upcoming")
-                            HStack(alignment: .center) {
-                                BannerShelfRow()
-                                BannerShelfRow()
+                            HStack(spacing: 5) {
+                                ShelfRow()
+                                ShelfRow()
                             }
                         }
+                        .padding(.horizontal, 15)
                     }
                 }
             }
