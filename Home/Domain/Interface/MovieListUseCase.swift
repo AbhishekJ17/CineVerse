@@ -6,8 +6,20 @@
 //
 
 protocol MovieListUseCase {
-    func fetchMovieList(page: Int) async throws -> (
+    func fetchMovieListFor(category: MovieCategory, page: Int) async throws -> (
         MovieListResponse?,
         APIError
     )
+}
+
+enum MovieCategory: CaseIterable {
+    case nowPlaying
+    case popular
+    case topRated
+    case upcoming
+}
+
+struct MovieSectionCategory {
+    let category: MovieCategory
+    let response: Result<MovieListResponse?, APIError>
 }

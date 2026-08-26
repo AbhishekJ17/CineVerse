@@ -18,6 +18,7 @@ enum APIError: Error {
     case serverError
     case badGateway
     case invalidResponse
+    case unknown
 
     var message: String {
         switch self {
@@ -32,6 +33,7 @@ enum APIError: Error {
             case .serverError: return "Something went wrong on our server."
             case .badGateway: return "The server is temporarily unavailable."
             case .invalidResponse: return "Something went wrong"
+            case .unknown: return "Something went wrong"
         }
     }
 }

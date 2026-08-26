@@ -10,10 +10,7 @@ import SwiftData
 
 struct MovieListView: View {
 
-    var viewModel: MovieListViewModel
-    let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 5, alignment: nil)
-    ]
+    @ObservedObject var viewModel: DefaultMovieListViewModel
     let rows: [GridItem] = [
         GridItem(.flexible(), spacing: 20, alignment: nil)
     ]
@@ -22,7 +19,7 @@ struct MovieListView: View {
         GridItem(.flexible(), spacing: 20, alignment: nil)
     ]
 
-    init(viewModel: MovieListViewModel) {
+    init(viewModel: DefaultMovieListViewModel) {
         self.viewModel = viewModel
     }
 
@@ -30,7 +27,6 @@ struct MovieListView: View {
         NavigationView {
             ZStack(alignment: .top) {
                 BackgroundView()
-
                 ScrollView {
                     LazyVStack(alignment: .leading) {
                         SectionHeadline(headline: "Now Playing")
@@ -93,6 +89,9 @@ struct MovieListView: View {
                     .padding(.horizontal)
                 }
             }
+            .onAppear {
+                viewModel.fetchAllSections()
+            }
             .navigationTitle(CineVerseText.cineVerseTitle)
         }
     }
@@ -100,7 +99,6 @@ struct MovieListView: View {
 
 #if DEBUG
 #Preview {
-    let viewModel: MovieListViewModel = DefaultMovieListViewModel()
-    MovieListView(viewModel: viewModel)
+    MovieListView(viewModel: DefaultMovieListViewModel())
 }
 #endif

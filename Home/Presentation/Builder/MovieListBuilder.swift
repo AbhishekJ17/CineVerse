@@ -10,7 +10,7 @@ import SwiftUI
 struct MovieListScreenBuilder {
 
     static func makeView() -> MovieListView {
-        let viewModel: MovieListViewModel = DefaultMovieListViewModel()
+        let viewModel = DefaultMovieListViewModel()
         return MovieListView(viewModel: viewModel)
     }
 }

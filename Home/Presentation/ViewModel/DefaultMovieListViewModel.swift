@@ -6,70 +6,54 @@
 //
 
 import Foundation
+import Combine
 
 protocol MovieListViewModel {
-    func fetchMovies(page: Int)
-    func fetchNowPlaying(page: Int)
-    func fetchPopular(page: Int)
-    func fetchTopRated(page: Int)
-    func fetchUpcoming(page: Int)
-
+    func fetchAllSections()
+    func fetchMoviesFor(category: MovieCategory, withPage: Int)
 }
 
-final class DefaultMovieListViewModel: MovieListViewModel {
+final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     private let repository: MovieListRepository = DefaultMovieListRepository()
-    lazy var movieNowPlayingUseCase: MovieListUseCase = DefaultMovieNowPlayingListUseCase(repository: repository)
-    lazy var moviePopularUseCase: MovieListUseCase = DefaultMoviePopularListUseCase(repository: repository)
-    lazy var movieTopRatedUseCase: MovieListUseCase = DefaultMovieTopRatedListUseCase(repository: repository)
-    lazy var movieUpcomigUseCase: MovieListUseCase = DefaultMovieUpcomingListUseCase(repository: repository)
+    lazy var movieListUseCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
 
-    func fetchMovies(page: Int) {
-        print("---- fetchMovies ---")
+    func fetchAllSections() {
         Task {
-            fetchNowPlaying(page: page)
-            fetchPopular(page: page)
-            fetchTopRated(page: page)
-            fetchUpcoming(page: page)
-        }
-    }
+            await withTaskGroup(of: MovieSectionCategory.self) { group in
 
-    func fetchNowPlaying(page: Int) {
-        print("---- fetchNowPlaying ---")
-        Task {
-            let (movieList, result) = try await movieNowPlayingUseCase.fetchMovieList(page: page)
-            if result == .success {
-                print("NowPlaying movie list is ready: ", movieList?.results.count)
+                for category in MovieCategory.allCases {
+                    group.addTask { [movieListUseCase] in
+                        do {
+                            let (movieList, _) = try await movieListUseCase.fetchMovieListFor(category: category, page: 1)
+                            return MovieSectionCategory(
+                                category: category,
+                                response: .success(movieList))
+                        } catch let error as APIError {
+                            return MovieSectionCategory(category: category, response: .failure(error))
+                        } catch {
+                            return MovieSectionCategory(category: category, response: .failure(.unknown))
+                        }
+                    }
+                }
+
+                for await movieList in group {
+                    switch movieList.response {
+                    case .success(let response):
+                        print("\(movieList.category) -- \(response!.results.count)")
+                    case .failure(let error):
+                        print("\(movieList.category) -- \(error)")
+                    }
+                }
             }
         }
     }
 
-    func fetchPopular(page: Int) {
-        print("---- fetchPopular ---")
+    func fetchMoviesFor(category: MovieCategory, withPage: Int) {
         Task {
-            let (movieList, result) = try await moviePopularUseCase.fetchMovieList(page: page)
+            let (movieList, result) = try await movieListUseCase.fetchMovieListFor(category: category, page: withPage)
             if result == .success {
-                print("Popular movie list is ready: ", movieList?.results.count)
-            }
-        }
-    }
-
-    func fetchTopRated(page: Int) {
-        print("---- fetchTopRated ---")
-        Task {
-            let (movieList, result) = try await movieTopRatedUseCase.fetchMovieList(page: page)
-            if result == .success {
-                print("TopRated movie list is ready: ", movieList?.results.count)
-            }
-        }
-    }
-
-    func fetchUpcoming(page: Int) {
-        print("---- fetchUpcoming ---")
-        Task {
-            let (movieList, result) = try await movieUpcomigUseCase.fetchMovieList(page: page)
-            if result == .success {
-                print("Upcoming movie list is ready: ", movieList?.results.count)
+                print("movie list is ready for this category \(category): ", movieList!.results.count)
             }
         }
     }
