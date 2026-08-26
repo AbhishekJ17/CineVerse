@@ -12,11 +12,14 @@ struct MovieListView: View {
 
     var viewModel: MovieListViewModel
     let columns: [GridItem] = [
-        GridItem(.flexible(), spacing: 5, alignment: nil),
         GridItem(.flexible(), spacing: 5, alignment: nil)
     ]
     let rows: [GridItem] = [
-        GridItem(.flexible(), spacing: nil, alignment: nil)
+        GridItem(.flexible(), spacing: 20, alignment: nil)
+    ]
+    let topRatedrows: [GridItem] = [
+        GridItem(.flexible(), spacing: 20, alignment: nil),
+        GridItem(.flexible(), spacing: 20, alignment: nil)
     ]
 
     init(viewModel: MovieListViewModel) {
@@ -28,11 +31,67 @@ struct MovieListView: View {
             ZStack(alignment: .top) {
                 BackgroundView()
 
-                VStack(alignment: .leading) {
-                    SectionHeadline(headline: "Now playing")
-                    BannerShelfRow()
+                ScrollView {
+                    LazyVStack(alignment: .leading) {
+                        SectionHeadline(headline: "Now Playing")
+                        ScrollView(.horizontal) {
+                            LazyHGrid(
+                                rows: rows,
+                                spacing: 20,
+                                pinnedViews: [.sectionHeaders]) {
+                                    ForEach(0..<10) { _ in
+                                        HeroStoryCard()
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal)
+
+                    LazyVStack(alignment: .leading) {
+                        SectionHeadline(headline: "Upcoming")
+                        ScrollView(.horizontal) {
+                            LazyHGrid(
+                                rows: rows,
+                                spacing: 10,
+                                pinnedViews: [.sectionHeaders]) {
+                                    ForEach(0..<10) { _ in
+                                        BannerShelfRow()
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal)
+
+                    LazyVStack(alignment: .leading) {
+                        SectionHeadline(headline: "Top Rated")
+                        ScrollView(.horizontal) {
+                            LazyHGrid(
+                                rows: topRatedrows,
+                                spacing: 10,
+                                pinnedViews: [.sectionHeaders]) {
+                                    ForEach(0..<20) { _ in
+                                        ShelfRow()
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal)
+
+                    LazyVStack(alignment: .leading) {
+                        SectionHeadline(headline: "Popular")
+                        ScrollView(.horizontal) {
+                            LazyHGrid(
+                                rows: rows,
+                                spacing: 20,
+                                pinnedViews: [.sectionHeaders]) {
+                                    ForEach(0..<10) { _ in
+                                        BannerShelfRow()
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.leading, 20)
             }
             .navigationTitle(CineVerseText.cineVerseTitle)
         }

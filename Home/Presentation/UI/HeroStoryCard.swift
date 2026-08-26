@@ -17,7 +17,6 @@ struct HeroStoryCard: View {
                 Imdb(rating: 7.9)
             }
         }
-        .background(Color.blue.gradient)
         .frame(maxHeight: .infinity)
     }
 }

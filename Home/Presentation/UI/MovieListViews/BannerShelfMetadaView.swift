@@ -14,16 +14,16 @@ struct BannerShelfMetadaView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title)
-                .font(.setRegularFontWith(size: 10))
+                .font(.setBoldFontWith(size: 12))
                 .foregroundStyle(.textPrimary)
             Text(overview)
-                .font(.setRegularFontWith(size: 8))
+                .font(.setBoldFontWith(size: 10))
                 .foregroundStyle(.textPrimary)
                 .lineLimit(2)
         }
         .padding(.horizontal, 5)
         .padding(.vertical, 5)
-        .background(.black).opacity(0.50)
+        .background(.black.gradient).opacity(0.50)
         .foregroundStyle(.textPrimary)
     }
 }
