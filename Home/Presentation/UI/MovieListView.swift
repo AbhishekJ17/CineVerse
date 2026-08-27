@@ -34,13 +34,13 @@ struct MovieListView: View {
                 BackgroundView()
                 ScrollView {
                     LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: "Now Playing")
+                        SectionHeadline(headline: MovieCategory.nowPlaying.name)
                         ScrollView(.horizontal) {
                             LazyHGrid(
                                 rows: rows,
                                 spacing: 20,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.nowPlayingMovieList) { movies in
+                                    ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movies in
                                         HeroStoryCard()
                                     }
                                  }
@@ -49,13 +49,13 @@ struct MovieListView: View {
                     .padding(.horizontal)
 
                     LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: "Upcoming")
+                        SectionHeadline(headline: MovieCategory.upcoming.name)
                         ScrollView(.horizontal) {
                             LazyHGrid(
                                 rows: upcomingRows,
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.upcomingMovieList) { _ in
+                                    ForEach(viewModel.getMovieListFrom(category: .upcoming)) { movies in
                                         BannerShelfRow()
                                     }
                                 }
@@ -64,13 +64,13 @@ struct MovieListView: View {
                     .padding(.horizontal)
 
                     LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: "Top Rated")
+                        SectionHeadline(headline: MovieCategory.topRated.name)
                         ScrollView(.horizontal) {
                             LazyHGrid(
                                 rows: topRatedRows,
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.topRatedMovieList) { _ in
+                                    ForEach(viewModel.getMovieListFrom(category: .topRated)) { _ in
                                         ShelfRow()
                                     }
                                 }
@@ -79,13 +79,13 @@ struct MovieListView: View {
                     .padding(.horizontal)
 
                     LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: "Popular")
+                        SectionHeadline(headline: MovieCategory.popular.name)
                         ScrollView(.horizontal) {
                             LazyHGrid(
                                 rows: rows,
                                 spacing: 20,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.popularMovieList) { _ in
+                                    ForEach(viewModel.getMovieListFrom(category: .popular)) { _ in
                                         BannerShelfRow()
                                     }
                                 }

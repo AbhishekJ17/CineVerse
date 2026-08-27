@@ -10,6 +10,15 @@ enum MovieCategory: CaseIterable {
     case popular
     case topRated
     case upcoming
+
+    var name: String {
+        switch self {
+        case .nowPlaying: return "Now Playing"
+        case .popular: return "Popular"
+        case .topRated: return "Top Rated"
+        case .upcoming: return "Upcoming"
+        }
+    }
 }
 
 struct MovieSectionCategory {

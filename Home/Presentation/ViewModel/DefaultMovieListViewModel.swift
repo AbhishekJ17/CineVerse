@@ -18,6 +18,7 @@ protocol MovieListViewModelOutput {
     var popularMovieList: [Movie] { get set }
     var topRatedMovieList: [Movie] { get set }
     var upcomingMovieList: [Movie] { get set }
+    var movieList: [MovieCategory: [Movie]] { get set }
     var errorMessage: String { get set }
 }
 
@@ -29,6 +30,8 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     @Published var popularMovieList: [Movie] = []
     @Published var topRatedMovieList: [Movie] = []
     @Published var upcomingMovieList: [Movie] = []
+    @Published var movieList: [MovieCategory : [Movie]] = [:]
+
     var errorMessage: String = ""
 
     private let repository: MovieListRepository = DefaultMovieListRepository()
@@ -58,7 +61,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                 for await movieList in group {
                     switch movieList.response {
                     case .success(let response):
-                        self.seperateOutMovieListAccordingTo(category: movieList.category, response: response)
+                        self.movieList[movieList.category] = response?.results
                     case .failure(let error):
                         print("\(movieList.category) -- \(error)")
                     }
@@ -71,7 +74,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
         Task {
             do {
                 let (movieList) = try await movieListUseCase.fetchMovieListFor(category: category, page: withPage)
-                self.seperateOutMovieListAccordingTo(category: category, response: movieList)
+                self.movieList[category] = movieList?.results
                 return MovieSectionCategory(category: category, response: .success(movieList))
             } catch let error as APIError {
                 return MovieSectionCategory(category: category, response: .failure(error))
@@ -81,16 +84,10 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
         }
     }
 
-    private func seperateOutMovieListAccordingTo(category: MovieCategory, response: MovieListResponse?) {
-        switch category {
-        case .nowPlaying:
-            self.nowPlayingMovieList = response?.results ?? []
-        case .popular:
-            self.popularMovieList = response?.results ?? []
-        case .upcoming:
-            self.upcomingMovieList = response?.results ?? []
-        case .topRated:
-            self.topRatedMovieList = response?.results ?? []
+    func getMovieListFrom(category: MovieCategory) -> [Movie] {
+        guard let movies = self.movieList[category] else {
+            return []
         }
+        return movies
     }
 }
