@@ -16,7 +16,7 @@ struct ShelfMetadataView: View {
             Text(title)
                 .font(.setRegularFontWith(size: 12))
                 .foregroundStyle(.textPrimary)
-                .lineLimit(1)
+                .lineLimit(2)
             Text("\(String(format: "%g", rating))/10")
                 .font(.setRegularFontWith(size: 10))
                 .foregroundStyle(.textMuted)

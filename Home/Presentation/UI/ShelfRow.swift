@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct ShelfRow: View {
+    var movie: Movie
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            ShelfImage()
-            ShelfMetadataView(title: "The GodFather: A New Era", rating: 7.9)
+            ShelfImage(imagePath: movie.backdrop_path)
+            ShelfMetadataView(title: movie.title, rating: movie.vote_average)
         }
     }
 }
 
 #Preview {
-    ShelfRow()
+    ShelfRow(movie: dummyMovie)
 }

@@ -40,8 +40,8 @@ struct MovieListView: View {
                                 rows: rows,
                                 spacing: 20,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movies in
-                                        HeroStoryCard()
+                                    ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movie in
+                                        HeroStoryCard(movie: movie)
                                     }
                                  }
                         }
@@ -55,8 +55,8 @@ struct MovieListView: View {
                                 rows: upcomingRows,
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .upcoming)) { movies in
-                                        BannerShelfRow()
+                                    ForEach(viewModel.getMovieListFrom(category: .upcoming)) { movie in
+                                        BannerShelfRow(movie: movie)
                                     }
                                 }
                         }
@@ -70,8 +70,8 @@ struct MovieListView: View {
                                 rows: topRatedRows,
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .topRated)) { _ in
-                                        ShelfRow()
+                                    ForEach(viewModel.getMovieListFrom(category: .topRated)) { movie in
+                                        ShelfRow(movie: movie)
                                     }
                                 }
                         }
@@ -83,10 +83,10 @@ struct MovieListView: View {
                         ScrollView(.horizontal) {
                             LazyHGrid(
                                 rows: rows,
-                                spacing: 20,
+                                spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .popular)) { _ in
-                                        BannerShelfRow()
+                                    ForEach(viewModel.getMovieListFrom(category: .popular)) { movie in
+                                        BannerShelfRow(movie: movie)
                                     }
                                 }
                         }

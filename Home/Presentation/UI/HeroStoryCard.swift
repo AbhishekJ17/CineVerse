@@ -8,19 +8,23 @@
 import SwiftUI
 
 struct HeroStoryCard: View {
+
+    var movie: Movie
+    private var cardWidth: CGFloat {
+        UIScreen.main.bounds.width * 0.8
+    }
     var body: some View {
-        VStack {
-            HeroImage()
-                .frame(height: 250)
+        VStack(alignment: .leading) {
+            HeroImage(imagePath: movie.poster_path)
             HStack(alignment: .top, spacing: 15) {
-                HeroCardTitle(title: "The Godfather: A New ERA")
-                Imdb(rating: 7.9)
+                HeroCardTitle(title: movie.title)
+                Imdb(rating: movie.vote_average)
             }
         }
-        .frame(maxHeight: .infinity)
+        .frame(width: cardWidth)
     }
 }
 
 #Preview {
-    HeroStoryCard()
+    HeroStoryCard(movie: dummyMovie)
 }

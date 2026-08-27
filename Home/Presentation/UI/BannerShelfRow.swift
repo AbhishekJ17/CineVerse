@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct BannerShelfRow: View {
+
+    var movie: Movie
     var body: some View {
         ZStack(alignment: .bottom) {
-            BannerShelfRowImage()
-            BannerShelfMetadaView()
+            BannerShelfRowImage(imagePath: movie.backdrop_path)
+            BannerShelfMetadaView(title: movie.title, overview: movie.overview)
                 .frame(width: 170)
         }
     }
 }
 
 #Preview {
-    BannerShelfRow()
+    BannerShelfRow(movie: dummyMovie)
 }
