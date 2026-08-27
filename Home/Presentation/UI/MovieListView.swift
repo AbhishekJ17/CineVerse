@@ -14,7 +14,12 @@ struct MovieListView: View {
     let rows: [GridItem] = [
         GridItem(.flexible(), spacing: 20, alignment: nil)
     ]
-    let topRatedrows: [GridItem] = [
+    let topRatedRows: [GridItem] = [
+        GridItem(.flexible(), spacing: 20, alignment: nil),
+        GridItem(.flexible(), spacing: 20, alignment: nil),
+        GridItem(.flexible(), spacing: 20, alignment: nil)
+    ]
+    let upcomingRows: [GridItem] = [
         GridItem(.flexible(), spacing: 20, alignment: nil),
         GridItem(.flexible(), spacing: 20, alignment: nil)
     ]
@@ -35,10 +40,10 @@ struct MovieListView: View {
                                 rows: rows,
                                 spacing: 20,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(0..<10) { _ in
+                                    ForEach(viewModel.nowPlayingMovieList) { movies in
                                         HeroStoryCard()
                                     }
-                                }
+                                 }
                         }
                     }
                     .padding(.horizontal)
@@ -47,10 +52,10 @@ struct MovieListView: View {
                         SectionHeadline(headline: "Upcoming")
                         ScrollView(.horizontal) {
                             LazyHGrid(
-                                rows: rows,
+                                rows: upcomingRows,
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(0..<10) { _ in
+                                    ForEach(viewModel.upcomingMovieList) { _ in
                                         BannerShelfRow()
                                     }
                                 }
@@ -62,10 +67,10 @@ struct MovieListView: View {
                         SectionHeadline(headline: "Top Rated")
                         ScrollView(.horizontal) {
                             LazyHGrid(
-                                rows: topRatedrows,
+                                rows: topRatedRows,
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(0..<20) { _ in
+                                    ForEach(viewModel.topRatedMovieList) { _ in
                                         ShelfRow()
                                     }
                                 }
@@ -80,7 +85,7 @@ struct MovieListView: View {
                                 rows: rows,
                                 spacing: 20,
                                 pinnedViews: [.sectionHeaders]) {
-                                    ForEach(0..<10) { _ in
+                                    ForEach(viewModel.popularMovieList) { _ in
                                         BannerShelfRow()
                                     }
                                 }
@@ -99,6 +104,9 @@ struct MovieListView: View {
 
 #if DEBUG
 #Preview {
-    MovieListView(viewModel: DefaultMovieListViewModel())
+    let repository: MovieListRepository = DefaultMovieListRepository()
+    let useCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
+    let viewModel = DefaultMovieListViewModel(movieListUseCase: useCase)
+    MovieListView(viewModel: viewModel)
 }
 #endif

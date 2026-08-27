@@ -5,7 +5,7 @@
 //  Created by Admin on 18/07/26.
 //
 
-struct Movie: Decodable {
+struct Movie: Decodable, Identifiable {
     var id: Int32
     var title: String
     var overview: String
