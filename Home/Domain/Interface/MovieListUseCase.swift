@@ -6,10 +6,7 @@
 //
 
 protocol MovieListUseCase {
-    func fetchMovieListFor(category: MovieCategory, page: Int) async throws -> (
-        MovieListResponse?,
-        APIError
-    )
+    func fetchMovieListFor(category: MovieCategory, page: Int) async throws -> MovieListResponse?
 }
 
 enum MovieCategory: CaseIterable {

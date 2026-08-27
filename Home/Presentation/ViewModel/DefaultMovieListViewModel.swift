@@ -25,10 +25,8 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                 for category in MovieCategory.allCases {
                     group.addTask { [movieListUseCase] in
                         do {
-                            let (movieList, _) = try await movieListUseCase.fetchMovieListFor(category: category, page: 1)
-                            return MovieSectionCategory(
-                                category: category,
-                                response: .success(movieList))
+                            let movieList = try await movieListUseCase.fetchMovieListFor(category: category, page: 1)
+                            return MovieSectionCategory(category: category, response: .success(movieList))
                         } catch let error as APIError {
                             return MovieSectionCategory(category: category, response: .failure(error))
                         } catch {
@@ -51,9 +49,13 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     func fetchMoviesFor(category: MovieCategory, withPage: Int) {
         Task {
-            let (movieList, result) = try await movieListUseCase.fetchMovieListFor(category: category, page: withPage)
-            if result == .success {
-                print("movie list is ready for this category \(category): ", movieList!.results.count)
+            do {
+                let (movieList) = try await movieListUseCase.fetchMovieListFor(category: category, page: withPage)
+                return MovieSectionCategory(category: category, response: .success(movieList))
+            } catch let error as APIError {
+                return MovieSectionCategory(category: category, response: .failure(error))
+            } catch {
+                return MovieSectionCategory(category: category, response: .failure(.unknown))
             }
         }
     }

@@ -13,17 +13,12 @@ class DefaultMovieListUseCase: MovieListUseCase {
         self.repository = repository
     }
 
-    func fetchMovieListFor(category: MovieCategory, page: Int) async throws -> (MovieListResponse?, APIError) {
-        let result: Result<MovieListResponse, APIError> = try await repository.fetchMovieList(endPoint: MovieEndPoints.nowPlaying(page: page))
-
-        switch category {
-            case .nowPlaying, .popular, .topRated, .upcoming:
-            switch result {
-            case .success(let movieList):
-                return (movieList, .success)
-            case .failure(let failure):
-                return (nil, failure)
-            }
+    func fetchMovieListFor(category: MovieCategory, page: Int) async throws -> MovieListResponse? {
+        do {
+            return try await repository
+                .fetchMovieList(endPoint: MovieEndPoints.nowPlaying(page: page))
+        } catch let error as APIError {
+            throw error
         }
     }
 

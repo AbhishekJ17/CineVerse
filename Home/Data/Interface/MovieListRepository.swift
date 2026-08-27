@@ -6,5 +6,5 @@
 //
 
 protocol MovieListRepository {
-    func fetchMovieList<T: Decodable>(endPoint: APIEndPoint) async throws -> Result<T, APIError>
+    func fetchMovieList<T: Decodable>(endPoint: APIEndPoint) async throws -> T?
 }

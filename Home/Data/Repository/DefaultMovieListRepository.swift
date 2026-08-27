@@ -7,13 +7,11 @@
 
 class DefaultMovieListRepository: MovieListRepository {
 
-    func fetchMovieList<T: Decodable>(endPoint: any APIEndPoint) async throws -> Result<T, APIError> {
-        let result: Result<T, APIError> = try await APIClient.shared.performRequest(with: endPoint)
-        switch result {
-        case .success(let movieList):
-            return .success(movieList)
-        case .failure(let failure):
-            return .failure(failure)
+    func fetchMovieList<T: Decodable>(endPoint: any APIEndPoint) async throws -> T? {
+        do {
+            return try await APIClient.shared.performRequest(with: endPoint)
+        }catch let error as APIError {
+            throw error
         }
     }
 }

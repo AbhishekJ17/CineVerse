@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkService {
-    func performRequest<T: Decodable>(with endPoint: APIEndPoint) async throws -> Result<T, APIError>
+    func performRequest<T: Decodable>(with endPoint: APIEndPoint) async throws -> T?
 }
 
 final actor APIClient: NetworkService {
@@ -33,16 +33,16 @@ final actor APIClient: NetworkService {
     }
 
 
-    func performRequest<T: Decodable>(with endPoint: any APIEndPoint) async throws -> Result<T, APIError> {
+    func performRequest<T: Decodable>(with endPoint: any APIEndPoint) async throws -> T? {
         guard isNetworkConnectionOn else {
-            return .failure(.noInternetConnection)
+            throw APIError.noInternetConnection
         }
         var component = URLComponents(
             url: baseURL.appending(path: endPoint.path),
             resolvingAgainstBaseURL: false
         )
         guard let url = component?.url else {
-            return .failure(.invalidURL)
+            throw APIError.invalidURL
         }
         component?.queryItems = endPoint.queryItems
 
@@ -55,9 +55,9 @@ final actor APIClient: NetworkService {
             let (data, response) = try await session.data(for: request)
             try handle(urlResponse: response)
             let result = try parseResponseforThis(type: T.self, data: data)
-            return .success(result)
+            return result
         } catch let error as APIError {
-            return .failure(error)
+            throw error
         }
     }
 
