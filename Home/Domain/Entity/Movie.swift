@@ -26,3 +26,5 @@ let dummyMovie = Movie(
     vote_average: 4.3,
     vote_count: 123
 )
+
+extension Movie: Hashable {}

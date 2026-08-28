@@ -10,6 +10,7 @@ import SwiftUI
 struct HeroStoryCard: View {
 
     var movie: Movie
+    let onSelect: () -> Void
     private var cardWidth: CGFloat {
         UIScreen.main.bounds.width * 0.8
     }
@@ -22,9 +23,12 @@ struct HeroStoryCard: View {
             }
         }
         .frame(width: cardWidth)
+        .onTapGesture {
+            onSelect()
+        }
     }
 }
 
 #Preview {
-    HeroStoryCard(movie: dummyMovie)
+    HeroStoryCard(movie: dummyMovie, onSelect: {})
 }

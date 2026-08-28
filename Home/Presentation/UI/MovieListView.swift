@@ -11,6 +11,7 @@ import SwiftData
 struct MovieListView: View {
 
     @ObservedObject var viewModel: DefaultMovieListViewModel
+    @State var selectedMovie: Movie?
     let rows: [GridItem] = [
         GridItem(.flexible(), spacing: 20, alignment: nil)
     ]
@@ -29,7 +30,7 @@ struct MovieListView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack(alignment: .top) {
                 BackgroundView()
                 ScrollView {
@@ -41,7 +42,9 @@ struct MovieListView: View {
                                 spacing: 20,
                                 pinnedViews: [.sectionHeaders]) {
                                     ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movie in
-                                        HeroStoryCard(movie: movie)
+                                        HeroStoryCard(movie: movie) {
+                                            selectedMovie = movie
+                                        }
                                     }
                                  }
                         }
@@ -56,7 +59,9 @@ struct MovieListView: View {
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
                                     ForEach(viewModel.getMovieListFrom(category: .upcoming)) { movie in
-                                        BannerShelfRow(movie: movie)
+                                        BannerShelfRow(movie: movie) {
+                                            selectedMovie = movie
+                                        }
                                     }
                                 }
                         }
@@ -71,7 +76,9 @@ struct MovieListView: View {
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
                                     ForEach(viewModel.getMovieListFrom(category: .topRated)) { movie in
-                                        ShelfRow(movie: movie)
+                                        ShelfRow(movie: movie) {
+                                            selectedMovie = movie
+                                        }
                                     }
                                 }
                         }
@@ -86,7 +93,9 @@ struct MovieListView: View {
                                 spacing: 10,
                                 pinnedViews: [.sectionHeaders]) {
                                     ForEach(viewModel.getMovieListFrom(category: .popular)) { movie in
-                                        BannerShelfRow(movie: movie)
+                                        BannerShelfRow(movie: movie) {
+                                            selectedMovie = movie
+                                        }
                                     }
                                 }
                         }
@@ -98,6 +107,9 @@ struct MovieListView: View {
                 viewModel.fetchAllSections()
             }
             .navigationTitle(CineVerseText.cineVerseTitle)
+            .navigationDestination(item: $selectedMovie) { movie in
+                MovieDetailView(movie: movie)
+            }
         }
     }
 }
