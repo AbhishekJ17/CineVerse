@@ -14,10 +14,6 @@ protocol MovieListViewModelInput {
 }
 
 protocol MovieListViewModelOutput {
-    var nowPlayingMovieList: [Movie] { get set }
-    var popularMovieList: [Movie] { get set }
-    var topRatedMovieList: [Movie] { get set }
-    var upcomingMovieList: [Movie] { get set }
     var movieList: [MovieCategory: [Movie]] { get set }
     var errorMessage: String { get set }
 }
@@ -26,10 +22,6 @@ typealias MovieListViewModel = MovieListViewModelInput & MovieListViewModelOutpu
 
 final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
-    @Published var nowPlayingMovieList: [Movie] = []
-    @Published var popularMovieList: [Movie] = []
-    @Published var topRatedMovieList: [Movie] = []
-    @Published var upcomingMovieList: [Movie] = []
     @Published var movieList: [MovieCategory : [Movie]] = [:]
 
     var errorMessage: String = ""

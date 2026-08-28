@@ -108,7 +108,7 @@ struct MovieListView: View {
             }
             .navigationTitle(CineVerseText.cineVerseTitle)
             .navigationDestination(item: $selectedMovie) { movie in
-                MovieDetailView(movie: movie)
+                MovieDetailScreenBuilder.openMovieDetail(id: movie.id)
             }
         }
     }

@@ -53,8 +53,9 @@ final actor APIClient: NetworkService {
 
         do {
             let (data, response) = try await session.data(for: request)
+            print(String(decoding: data, as: UTF8.self))
             try handle(urlResponse: response)
-            let result = try parseResponseforThis(type: T.self, data: data)
+            let result = try! parseResponseforThis(type: T.self, data: data)
             return result
         } catch let error as APIError {
             throw error
@@ -85,7 +86,6 @@ final actor APIClient: NetworkService {
         default: return
         }
     }
-
 }
 
 

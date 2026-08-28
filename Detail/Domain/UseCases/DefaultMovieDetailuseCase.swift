@@ -13,10 +13,9 @@ class DefaultMovieDetailuseCase: MovieDetailUseCase {
         self.movieDetailRepository = movieDetailRepository
     }
 
-    func execute(movieId: Int) async throws -> Movie? {
+    func execute(movieId: Int32) async throws -> MovieDetail? {
         do {
-            let result = try await movieDetailRepository.fetchMovieDetail(fromId: movieId)
-            return result
+            return try await movieDetailRepository.fetchMovieDetail(fromId: movieId)
         } catch let error as APIError {
             throw error
         }

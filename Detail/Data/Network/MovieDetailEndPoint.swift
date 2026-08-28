@@ -8,11 +8,11 @@ import Foundation
 
 enum MovieDetailEndPoint: APIEndPoint {
 
-    case detail(Int)
+    case detail(Int32)
 
     var path: String {
         if case .detail(let id) = self {
-            return "\(id)"
+            return "movie/\(id)"
         }
         return ""
     }

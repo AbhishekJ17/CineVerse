@@ -6,15 +6,31 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MovieDetailView: View {
 
-    var movie: Movie
+    @ObservedObject var viewModel: DefaultMovieDetailViewModel
+    var movie: Movie?
+
+    init(viewModel: DefaultMovieDetailViewModel) {
+        self.viewModel = viewModel
+    }
     var body: some View {
-        Text(movie.title)
+        NavigationStack {
+            ZStack(alignment: .top) {
+                BackgroundView()
+                SectionHeadline(headline: viewModel.movieDetail?.title ?? "")
+                Text(viewModel.errorMessage)
+                    .foregroundStyle(.accentPrimary)
+            }
+            .onAppear {
+                viewModel.fetchMovieDetail()
+            }
+        }
     }
 }
 
 #Preview {
-    MovieDetailView(movie: dummyMovie)
+    MovieDetailScreenBuilder.openMovieDetail(id: 123)
 }

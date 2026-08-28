@@ -7,5 +7,5 @@
 
 
 protocol MovieDetailRepository {
-    func fetchMovieDetail(fromId: Int) async throws -> Movie?
+    func fetchMovieDetail<T: Decodable>(fromId: Int32) async throws -> T?
 }

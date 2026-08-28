@@ -7,7 +7,7 @@
 
 class DefaultMovieDetailRepository: MovieDetailRepository {
 
-    func fetchMovieDetail(fromId: Int) async throws -> Movie? {
+    func fetchMovieDetail<T: Decodable>(fromId: Int32) async throws -> T? {
         let movieDetailEndPoint = MovieDetailEndPoint.detail(fromId)
         do {
             return try await APIClient.shared.performRequest(with: movieDetailEndPoint)
