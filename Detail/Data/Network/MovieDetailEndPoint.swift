@@ -22,7 +22,7 @@ enum MovieDetailEndPoint: APIEndPoint {
     }
 
     var queryItems: [URLQueryItem] {
-        []
+        [URLQueryItem(name: "language", value: "en-US")]
     }
 
     var headers: [String : String] {

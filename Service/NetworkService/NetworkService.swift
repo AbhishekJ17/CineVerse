@@ -39,7 +39,7 @@ final actor APIClient: NetworkService {
         }
         var component = URLComponents(
             url: baseURL.appending(path: endPoint.path),
-            resolvingAgainstBaseURL: false
+            resolvingAgainstBaseURL: true
         )
         guard let url = component?.url else {
             throw APIError.invalidURL
@@ -53,7 +53,6 @@ final actor APIClient: NetworkService {
 
         do {
             let (data, response) = try await session.data(for: request)
-            print(String(decoding: data, as: UTF8.self))
             try handle(urlResponse: response)
             let result = try! parseResponseforThis(type: T.self, data: data)
             return result
@@ -65,7 +64,7 @@ final actor APIClient: NetworkService {
     private func parseResponseforThis<T: Decodable>(type: T.Type, data: Data) throws -> T {
         do {
             let decoder = JSONDecoder()
-            let decodedData = try decoder.decode(T.self, from: data)
+            let decodedData = try! decoder.decode(T.self, from: data)
             return decodedData
         } catch {
             throw APIError.parsingError

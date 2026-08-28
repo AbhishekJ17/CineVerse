@@ -19,12 +19,14 @@ struct MovieDetail: Decodable, Identifiable {
     var production_countries: [ProductionCountries] = []
     var spoken_languages: [SpokenLanguage] = []
     var adult = false
+    var video = false
     var status: String
+    var tagline: String
     var runtime: Int
-    var revenue: Int32
+    var revenue: Int64
     var original_language: String
     var origin_country: [String] = []
-    var budget: Int32
+    var budget: Int64
     var popularity: Double
 }
 
