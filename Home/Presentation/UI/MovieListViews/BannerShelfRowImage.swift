@@ -31,7 +31,7 @@ struct BannerShelfRowImage: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 170, height: 250)
-                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
             case .failure:
                 Image(systemName: "exclamationmark.triangle")
                     .foregroundColor(.secondary)

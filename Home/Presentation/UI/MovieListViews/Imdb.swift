@@ -11,7 +11,7 @@ struct Imdb: View {
 
     var rating: Double
     var body: some View {
-        Text(String(format: "%g", rating))
+        Text(String(format: "%.1f", rating))
             .font(.setBoldFontWith(size: 12))
             .padding(.horizontal, 5)
             .padding(.vertical, 5)

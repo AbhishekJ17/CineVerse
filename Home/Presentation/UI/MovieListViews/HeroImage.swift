@@ -31,7 +31,7 @@ struct HeroImage: View {
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(height: 200)
+                    .frame(height: 250)
                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
             case .failure:
                 Image(systemName: "exclamationmark.triangle")

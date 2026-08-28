@@ -29,8 +29,8 @@ struct ShelfImage: View {
             case .success(let image):
                 Image(uiImage: image)
                     .resizable()
-                    .frame(width: 150, height: 180)
-                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 180, height: 180)
+                    .aspectRatio(contentMode: .fill)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             case .failure:
                 Image(systemName: "exclamationmark.triangle")
