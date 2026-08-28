@@ -20,13 +20,8 @@ struct MovieDetailView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 BackgroundView()
-                SectionHeadline(headline: viewModel.movieDetail?.title ?? "")
-                Text(viewModel.errorMessage)
-                    .foregroundStyle(.accentPrimary)
             }
-            .onAppear {
-                viewModel.fetchMovieDetail()
-            }
+            .navigationTitle(viewModel.title)
         }
     }
 }

@@ -25,6 +25,7 @@ final class DefaultMovieDetailViewModel: MovieDetailViewModel, ObservableObject 
     @Published var movieDetail: MovieDetail?
     @Published var loading: Bool = false
     @Published var errorMessage: String = ""
+    @Published var title: String = ""
 
     private let useCase: MovieDetailUseCase
     let movieId: Int32
@@ -32,13 +33,14 @@ final class DefaultMovieDetailViewModel: MovieDetailViewModel, ObservableObject 
     init(movieId: Int32, useCase: MovieDetailUseCase) {
         self.movieId = movieId
         self.useCase = useCase
+        self.fetchMovieDetail()
     }
 
     func fetchMovieDetail() {
         Task {
             do {
                 let movieDetail = try await useCase.execute(movieId: movieId)
-                debugPrint(movieDetail)
+                self.title = movieDetail!.title
             } catch let error as APIError {
                 self.errorMessage = error.message
             }
