@@ -20,8 +20,11 @@ struct MovieDetailView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 BackgroundView()
+                ScrollView {
+                    HeroHeader(imagePath: "/oQRgyQCzcyZvE6w5heM9ktVY0LT.jpg")
+                }
             }
-            .navigationTitle(viewModel.title)
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }
