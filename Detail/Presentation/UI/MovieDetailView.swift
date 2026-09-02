@@ -15,6 +15,7 @@ struct MovieDetailView: View {
     let heroheaderRows: [GridItem] = [
         GridItem(.flexible(), spacing: 10, alignment: .leading)
     ]
+    @State var isFavourite = false
 
     init(viewModel: DefaultMovieDetailViewModel) {
         self.viewModel = viewModel
@@ -62,6 +63,22 @@ struct MovieDetailView: View {
                 }
                 .ignoresSafeArea(edges: .top)
             }
+            .navigationBarItems(trailing:
+                Button(action: {
+                    isFavourite.toggle()
+                }, label: {
+                    if isFavourite {
+                        Image(systemName: "heart.fill")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(.accentPrimary)
+                    }else {
+                        Image(systemName: "heart")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                    }
+                })
+            )
         }
     }
 }
