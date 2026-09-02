@@ -44,6 +44,15 @@ struct MovieDetailView: View {
                                             }
                                         }
                                     }
+                                    HeroCardTitle(title: "Production Logos Shelf")
+                                    ScrollView(.horizontal) {
+                                        HStack(spacing: 10) {
+                                            ForEach(["/71BqEFAF4V3qjjMPCpLuyJFB9A.png", "/nw4kyc29QRpNtFbdsBHkRSFavvt.png",
+                                                     "/hUzeosd33nzE5MCNsZxCGEKTXaQ.png", "/qx9K6bFWJupwde0xQDwOvXkOaL8.png"], id: \.self) { imagePath in
+                                                CircularLogo(imagePath: imagePath)
+                                            }
+                                        }
+                                    }
                                 }
                                 .padding(.leading, 10)
                                 .padding(.trailing, 10)
