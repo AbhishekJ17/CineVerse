@@ -38,6 +38,7 @@ struct MovieDetailView: View {
                                         Spacer()
                                     }
                                     QuickSpecsRow()
+                                    TechnicalSpecs()
                                     ScrollView(.horizontal, showsIndicators: false) {
                                         HStack(spacing: 10) {
                                             ForEach(["Action", "Science Fiction", "Drama", "Comedy"], id: \.self) { genre in
