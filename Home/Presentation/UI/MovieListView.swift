@@ -33,74 +33,78 @@ struct MovieListView: View {
         NavigationStack {
             ZStack(alignment: .top) {
                 BackgroundView()
-                ScrollView {
-                    LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: MovieCategory.nowPlaying.name)
-                        ScrollView(.horizontal) {
-                            LazyHGrid(
-                                rows: rows,
-                                spacing: 20,
-                                pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movie in
-                                        HeroStoryCard(movie: movie) {
-                                            selectedMovie = movie
+                if viewModel.isLoading {
+                    ProgressView()
+                }else {
+                    ScrollView {
+                        LazyVStack(alignment: .leading) {
+                            SectionHeadline(headline: MovieCategory.nowPlaying.name)
+                            ScrollView(.horizontal) {
+                                LazyHGrid(
+                                    rows: rows,
+                                    spacing: 20,
+                                    pinnedViews: [.sectionHeaders]) {
+                                        ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movie in
+                                            HeroStoryCard(movie: movie) {
+                                                selectedMovie = movie
+                                            }
                                         }
                                     }
-                                 }
+                            }
                         }
-                    }
-                    .padding(.horizontal)
+                        .padding(.horizontal)
 
-                    LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: MovieCategory.upcoming.name)
-                        ScrollView(.horizontal) {
-                            LazyHGrid(
-                                rows: upcomingRows,
-                                spacing: 10,
-                                pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .upcoming)) { movie in
-                                        BannerShelfRow(movie: movie) {
-                                            selectedMovie = movie
+                        LazyVStack(alignment: .leading) {
+                            SectionHeadline(headline: MovieCategory.upcoming.name)
+                            ScrollView(.horizontal) {
+                                LazyHGrid(
+                                    rows: upcomingRows,
+                                    spacing: 10,
+                                    pinnedViews: [.sectionHeaders]) {
+                                        ForEach(viewModel.getMovieListFrom(category: .upcoming)) { movie in
+                                            BannerShelfRow(movie: movie) {
+                                                selectedMovie = movie
+                                            }
                                         }
                                     }
-                                }
+                            }
                         }
-                    }
-                    .padding(.horizontal)
+                        .padding(.horizontal)
 
-                    LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: MovieCategory.topRated.name)
-                        ScrollView(.horizontal) {
-                            LazyHGrid(
-                                rows: topRatedRows,
-                                spacing: 10,
-                                pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .topRated)) { movie in
-                                        ShelfRow(movie: movie) {
-                                            selectedMovie = movie
+                        LazyVStack(alignment: .leading) {
+                            SectionHeadline(headline: MovieCategory.topRated.name)
+                            ScrollView(.horizontal) {
+                                LazyHGrid(
+                                    rows: topRatedRows,
+                                    spacing: 10,
+                                    pinnedViews: [.sectionHeaders]) {
+                                        ForEach(viewModel.getMovieListFrom(category: .topRated)) { movie in
+                                            ShelfRow(movie: movie) {
+                                                selectedMovie = movie
+                                            }
                                         }
                                     }
-                                }
+                            }
                         }
-                    }
-                    .padding(.horizontal)
+                        .padding(.horizontal)
 
-                    LazyVStack(alignment: .leading) {
-                        SectionHeadline(headline: MovieCategory.popular.name)
-                        ScrollView(.horizontal) {
-                            LazyHGrid(
-                                rows: rows,
-                                spacing: 10,
-                                pinnedViews: [.sectionHeaders]) {
-                                    ForEach(viewModel.getMovieListFrom(category: .popular)) { movie in
-                                        BannerShelfRow(movie: movie) {
-                                            selectedMovie = movie
+                        LazyVStack(alignment: .leading) {
+                            SectionHeadline(headline: MovieCategory.popular.name)
+                            ScrollView(.horizontal) {
+                                LazyHGrid(
+                                    rows: rows,
+                                    spacing: 10,
+                                    pinnedViews: [.sectionHeaders]) {
+                                        ForEach(viewModel.getMovieListFrom(category: .popular)) { movie in
+                                            BannerShelfRow(movie: movie) {
+                                                selectedMovie = movie
+                                            }
                                         }
                                     }
-                                }
+                            }
                         }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
             }
             .onAppear {

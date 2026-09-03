@@ -20,7 +20,6 @@ protocol MovieDetailViewModelOutput {
 
 typealias MovieDetailViewModel = MovieDetailViewModelInput & MovieDetailViewModelOutput
 
-@MainActor
 final class DefaultMovieDetailViewModel: MovieDetailViewModel, ObservableObject {
 
     @Published var movieDetail: MovieDetail?

@@ -16,6 +16,7 @@ protocol MovieListViewModelInput {
 protocol MovieListViewModelOutput {
     var movieList: [MovieCategory: [Movie]] { get set }
     var errorMessage: String { get set }
+    var isLoading: Bool { get set }
 }
 
 typealias MovieListViewModel = MovieListViewModelInput & MovieListViewModelOutput
@@ -23,7 +24,7 @@ typealias MovieListViewModel = MovieListViewModelInput & MovieListViewModelOutpu
 final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     @Published var movieList: [MovieCategory : [Movie]] = [:]
-
+    @Published var isLoading: Bool = false
     var errorMessage: String = ""
 
     private let repository: MovieListRepository = DefaultMovieListRepository()
@@ -36,7 +37,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     func fetchAllSections() {
         Task {
            await withTaskGroup(of: MovieSectionCategory.self) { group in
-
+               self.isLoading = true
                 for category in MovieCategory.allCases {
                     group.addTask { [movieListUseCase] in
                         do {
@@ -54,6 +55,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                     switch movieList.response {
                     case .success(let response):
                         self.movieList[movieList.category] = response?.results
+                        self.isLoading = false
                     case .failure(let error):
                         print("\(movieList.category) -- \(error)")
                     }

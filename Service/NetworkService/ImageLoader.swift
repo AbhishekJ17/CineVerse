@@ -7,69 +7,6 @@
 
 import SwiftUI
 
-/*
- SwiftUI View
-      │
-      ↓
-ImageLoader
-      │
-┌──────────┴──────────┐
-↓                     ↓
-Memory Cache          In-flight Tasks
-│                     │
-└──────────┬──────────┘
-      ↓
- URLSession
-      │
-      ↓
- CDN / Server
-
----------------------------------------------
- When image X is requested:
-
- Request 1
-    ↓
- cache miss
-    ↓
- create Task
-    ↓
- inFlight[X] = task
- ---------------------------------------------
-
- Request 2 comes in:
-
- Request 2
-    ↓
- cache miss
-    ↓
- X exists in inFlight
-    ↓
- await existing Task
- ---------------------------------------------
-
- Now you get:
-
- 20 UI requests
-        ↓
-    1 network request
-        ↓
-    20 consumers
-
- ImageLoader
-    │
-    ├── URL construction/configuration
-    │
-    ├── Memory cache
-    │
-    ├── In-flight request deduplication
-    │
-    ├── Network request
-    │
-    ├── Image decoding/downsampling
-    │
-    └── Cancellation
- */
-
 final actor ImageLoader {
 
     static let shared = ImageLoader()
@@ -110,31 +47,3 @@ final actor ImageLoader {
         return image
     }
 }
-
-/*
- Request image
-      │
-      ▼
- Memory cache?
-   │       │
-  YES      NO
-   │        │
-   ▼        ▼
- Return   In-flight task?
-            │       │
-           YES      NO
-            │        │
-            ▼        ▼
-        await      Create Task
-        existing      │
-                      ▼
-                   Network
-                      │
-                      ▼
-                   UIImage
-                      │
-               ┌──────┴──────┐
-               ▼             ▼
-             Cache       All callers
-                         get same image
- */
