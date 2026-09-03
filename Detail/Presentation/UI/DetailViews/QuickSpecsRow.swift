@@ -9,14 +9,16 @@ import SwiftUI
 
 struct QuickSpecsRow: View {
 
+    var movieDetail: MovieDetail?
+
     var body: some View {
         HStack(spacing: 10) {
-            Text("2026")
+            Text(movieDetail?.release_date.releaseYear ?? "")
                 .font(.setRegularFontWith(size: 15))
             Divider()
                 .background(.textMuted)
                 .frame(width: 5)
-            Text("2h 41m")
+            Text(movieDetail?.runtime.formattedRuntime ?? "")
                 .font(.setRegularFontWith(size: 15))
             Divider()
                 .background(.textMuted)
@@ -26,9 +28,9 @@ struct QuickSpecsRow: View {
                     .resizable()
                     .frame(width: 15, height: 15)
                     .foregroundStyle(Color.yellow)
-                Text("7.9/10")
+                Text(String(format: "%.1f", movieDetail?.vote_average ?? 0) + "/10")
                     .font(.setRegularFontWith(size: 15))
-                Text("(2,218 votes)")
+                Text("(\(movieDetail?.vote_count.formattedWithCommas ?? "") votes)")
                     .font(.setRegularFontWith(size: 15))
             }
         }

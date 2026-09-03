@@ -20,12 +20,12 @@ protocol MovieDetailViewModelOutput {
 
 typealias MovieDetailViewModel = MovieDetailViewModelInput & MovieDetailViewModelOutput
 
+@MainActor
 final class DefaultMovieDetailViewModel: MovieDetailViewModel, ObservableObject {
 
     @Published var movieDetail: MovieDetail?
-    @Published var loading: Bool = false
+    @Published var loading: Bool = true
     @Published var errorMessage: String = ""
-    @Published var title: String = ""
 
     private let useCase: MovieDetailUseCase
     let movieId: Int32
@@ -33,14 +33,14 @@ final class DefaultMovieDetailViewModel: MovieDetailViewModel, ObservableObject 
     init(movieId: Int32, useCase: MovieDetailUseCase) {
         self.movieId = movieId
         self.useCase = useCase
-        self.fetchMovieDetail()
     }
 
     func fetchMovieDetail() {
         Task {
             do {
                 let movieDetail = try await useCase.execute(movieId: movieId)
-                self.title = movieDetail!.title
+                self.movieDetail = movieDetail
+                self.loading = false
             } catch let error as APIError {
                 self.errorMessage = error.message
             }

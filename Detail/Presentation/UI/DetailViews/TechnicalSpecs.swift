@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TechnicalSpecs: View {
+
+    var movieDetail: MovieDetail?
+
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             Text("Technical Specs")
@@ -20,7 +23,7 @@ struct TechnicalSpecs: View {
                         Text("Budget:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text("$225,000,000")
+                        Text(movieDetail?.budget.formattedAsCurrency ?? "0")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
@@ -30,7 +33,7 @@ struct TechnicalSpecs: View {
                         Text("Status:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text("Released")
+                        Text(movieDetail?.status ?? "")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
@@ -41,7 +44,7 @@ struct TechnicalSpecs: View {
                         Text("Box Office Revenue:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text("$2,232,611,878")
+                        Text(movieDetail?.revenue.formattedAsCurrency ?? "0")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
@@ -51,7 +54,7 @@ struct TechnicalSpecs: View {
                         Text("Original Language:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text("English (en)")
+                        Text(movieDetail?.original_language ?? "")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
