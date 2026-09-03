@@ -10,7 +10,7 @@ import SwiftData
 
 struct MovieListView: View {
 
-    @ObservedObject var viewModel: DefaultMovieListViewModel
+    @StateObject var viewModel: DefaultMovieListViewModel
     @State var selectedMovie: Movie?
     let rows: [GridItem] = [
         GridItem(.flexible(), spacing: 20, alignment: nil)
@@ -26,7 +26,7 @@ struct MovieListView: View {
     ]
 
     init(viewModel: DefaultMovieListViewModel) {
-        self.viewModel = viewModel
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {

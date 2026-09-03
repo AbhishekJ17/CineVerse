@@ -10,14 +10,14 @@ import Combine
 
 struct MovieDetailView: View {
 
-    @ObservedObject var viewModel: DefaultMovieDetailViewModel
+    @StateObject var viewModel: DefaultMovieDetailViewModel
     let heroheaderRows: [GridItem] = [
         GridItem(.flexible(), spacing: 10, alignment: .leading)
     ]
     @State var isFavourite = false
 
     init(viewModel: DefaultMovieDetailViewModel) {
-        self.viewModel = viewModel
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     var body: some View {
         NavigationStack {
