@@ -8,49 +8,16 @@
 import SwiftUI
 
 struct ShelfImage: View {
-    var imagePath: String
-    @State private var phase: ImagePhase = .empty
+    let path: String
 
-    enum ImagePhase {
-        case empty
-        case success(UIImage)
-        case failure
-    }
-
-    init(imagePath: String) {
-        self.imagePath = imagePath
-    }
-    
     var body: some View {
-        Group {
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                Image(uiImage: image)
-                    .resizable()
-                    .frame(width: 180, height: 180)
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-            case .failure:
-                Image(systemName: "exclamationmark.triangle")
-                    .foregroundColor(.secondary)
-            }
-        }
-        .task {
-            await loadImage()
-        }
-    }
-    private func loadImage() async {
-        do {
-            let image = try await ImageLoader.shared.image(path: imagePath)
-            phase = .success(image)
-        } catch {
-            phase = .failure
-        }
+        CineVerseRemoteImage(path: path)
+            .scaledToFit()
+            .frame(width: 180, height: 180)
+            .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 
 #Preview {
-    ShelfImage(imagePath: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg")
+    ShelfImage(path: "/qJ2tW6WMUDux911r6m7haRef0WH.jpg")
 }

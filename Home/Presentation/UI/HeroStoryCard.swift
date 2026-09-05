@@ -16,7 +16,7 @@ struct HeroStoryCard: View {
     }
     var body: some View {
         VStack(alignment: .leading) {
-            HeroImage(imagePath: movie.poster_path)
+            HeroImage(path: movie.poster_path)
             HStack(alignment: .top, spacing: 15) {
                 HeroCardTitle(title: movie.title)
                 Imdb(rating: movie.vote_average)

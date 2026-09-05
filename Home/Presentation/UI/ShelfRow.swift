@@ -12,7 +12,7 @@ struct ShelfRow: View {
     let onSelect: () -> Void
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            ShelfImage(imagePath: movie.backdrop_path)
+            ShelfImage(path: movie.backdrop_path)
             ShelfMetadataView(title: movie.title, rating: movie.vote_average)
         }
         .onTapGesture {

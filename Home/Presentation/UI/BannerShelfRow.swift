@@ -13,7 +13,7 @@ struct BannerShelfRow: View {
     let onSelect: () -> Void
     var body: some View {
         ZStack(alignment: .bottom) {
-            BannerShelfRowImage(imagePath: movie.backdrop_path)
+            BannerShelfRowImage(path: movie.backdrop_path)
             BannerShelfMetadaView(title: movie.title, overview: movie.overview)
                 .frame(width: 170)
         }
