@@ -50,7 +50,7 @@ struct MovieDetailView: View {
                                         ScrollView(.horizontal, showsIndicators: false) {
                                             HStack(spacing: 10) {
                                                 ForEach(viewModel.movieDetail?.production_companies ?? [], id: \.id) { production in
-                                                    CircularLogo(imagePath: production.logo_path ?? "")
+                                                    CircularLogo(path: production.logo_path ?? "")
                                                 }
                                             }
                                         }

@@ -7,17 +7,23 @@
 
 import SwiftUI
 
-final actor ImageLoader {
+protocol ImageLoading {
+    func image(path: String) async throws -> UIImage
+}
+
+final actor ImageLoader: ImageLoading {
 
     static let shared = ImageLoader()
-    private var localImageCache = NSCache<NSURL, UIImage>()
+    private var localImageCache: NSCache<NSURL, UIImage> = {
+        let cache = NSCache<NSURL, UIImage>()
+        cache.countLimit = 100
+        cache.totalCostLimit = 100 * 1024 * 1024
+        return cache
+    }()
     private var inFlightTasks: [URL: Task<UIImage, Error>] = [:]
     private let imageURL = URL(string: "https://image.tmdb.org/t/p/w500/")!
 
-    private init() {
-        localImageCache.countLimit = 100
-        localImageCache.totalCostLimit = 1024 * 1024 * 100
-    }
+    private init() {}
 
     func image(path: String) async throws -> UIImage {
         let downloadImageURL = imageURL.appending(path: path)
