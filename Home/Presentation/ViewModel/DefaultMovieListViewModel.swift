@@ -32,6 +32,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     init(movieListUseCase: MovieListUseCase) {
         self.movieListUseCase = movieListUseCase
+        fetchAllSections()
     }
 
     func fetchAllSections() {

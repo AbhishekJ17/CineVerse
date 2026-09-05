@@ -107,9 +107,6 @@ struct MovieListView: View {
                     }
                 }
             }
-            .onAppear {
-                viewModel.fetchAllSections()
-            }
             .navigationTitle(CineVerseText.cineVerseTitle)
             .navigationDestination(item: $selectedMovie) { movie in
                 MovieDetailScreenBuilder.openMovieDetail(id: movie.id)

@@ -17,6 +17,8 @@ struct BannerShelfRow: View {
             BannerShelfMetadaView(title: movie.title, overview: movie.overview)
                 .frame(width: 170)
         }
+        .frame(width: 170)
+        .contentShape(Rectangle())
         .onTapGesture {
             onSelect()
         }
