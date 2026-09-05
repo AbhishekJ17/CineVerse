@@ -31,16 +31,14 @@ struct MovieDetailView: View {
                         LazyVStack(alignment: .leading) {
                             ScrollView {
                                 LazyVGrid(columns: heroheaderRows) {
-                                    HeroHeader(imagePath: viewModel.movieDetail?.poster_path ?? "")
+                                    HeroHeader()
                                     VStack(alignment: .leading, spacing: 16) {
                                         HStack(spacing: 5) {
-                                            TitleAndDescriptionView(
-                                                title: viewModel.movieDetail?.title ?? "",
-                                                description: viewModel.movieDetail?.overview ?? "")
+                                            TitleAndDescriptionView()
                                             Spacer()
                                         }
-                                        QuickSpecsRow(movieDetail: viewModel.movieDetail)
-                                        TechnicalSpecs(movieDetail: viewModel.movieDetail)
+                                        QuickSpecsRow()
+                                        TechnicalSpecs()
                                         ScrollView(.horizontal, showsIndicators: false) {
                                             HStack(spacing: 10) {
                                                 ForEach(viewModel.movieDetail?.genres ?? [], id: \.id) { genre in
@@ -85,6 +83,7 @@ struct MovieDetailView: View {
                     }
                 })
             )
+            .environmentObject(viewModel)
         }
     }
 }

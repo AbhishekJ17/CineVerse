@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct TitleAndDescriptionView: View {
-    var title: String
-    var description: String
+    @EnvironmentObject var viewModel: DefaultMovieDetailViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            Text(title)
+            Text(viewModel.movieDetail?.title ?? "")
                 .font(.setBoldFontWith(size: 20))
 
-            Text(description)
+            Text(viewModel.movieDetail?.overview ?? "")
                 .font(.setItalicFontWith(size: 13))
         }
         .foregroundStyle(.textPrimary)
@@ -25,6 +24,5 @@ struct TitleAndDescriptionView: View {
 }
 
 #Preview {
-    TitleAndDescriptionView(title: "The Boy, the Mole, the Fox and the Horse",
-              description: "A supernatural tale set on death row in a Southern prison, where gentle giant John Coffey possesses the mysterious power to heal people's ailments. When the cell block's head guard, Paul Edgecomb, recognizes Coffey's miraculous gift, he tries desperately to help stave off the condemned man's execution.")
+    TitleAndDescriptionView()
 }

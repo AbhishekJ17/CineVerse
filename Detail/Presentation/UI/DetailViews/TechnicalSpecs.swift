@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct TechnicalSpecs: View {
-
-    var movieDetail: MovieDetail?
+    @EnvironmentObject var viewModel: DefaultMovieDetailViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -23,7 +22,7 @@ struct TechnicalSpecs: View {
                         Text("Budget:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text(movieDetail?.budget.formattedAsCurrency ?? "0")
+                        Text(viewModel.movieDetail?.budget.formattedAsCurrency ?? "0")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
@@ -33,7 +32,7 @@ struct TechnicalSpecs: View {
                         Text("Status:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text(movieDetail?.status ?? "")
+                        Text(viewModel.movieDetail?.status ?? "")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
@@ -44,7 +43,7 @@ struct TechnicalSpecs: View {
                         Text("Box Office Revenue:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text(movieDetail?.revenue.formattedAsCurrency ?? "0")
+                        Text(viewModel.movieDetail?.revenue.formattedAsCurrency ?? "0")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }
@@ -54,7 +53,7 @@ struct TechnicalSpecs: View {
                         Text("Original Language:")
                             .font(.setRegularFontWith(size: 13))
                             .foregroundStyle(Color.textMuted)
-                        Text(movieDetail?.original_language ?? "")
+                        Text(viewModel.movieDetail?.original_language ?? "")
                             .font(.setMediumFontWith(size: 15))
                             .foregroundStyle(.textPrimary)
                     }

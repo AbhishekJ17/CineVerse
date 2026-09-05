@@ -8,17 +8,13 @@
 import SwiftUI
 
 struct HeroHeader: View {
-    var imagePath: String
+    @EnvironmentObject var viewModel: DefaultMovieDetailViewModel
     @State private var phase: ImagePhase = .empty
 
     enum ImagePhase {
         case empty
         case success(UIImage)
         case failure
-    }
-
-    init(imagePath: String) {
-        self.imagePath = imagePath
     }
     
     var body: some View {
@@ -46,7 +42,7 @@ struct HeroHeader: View {
 
     private func loadImage() async {
         do {
-            let image = try await ImageLoader.shared.image(path: imagePath)
+            let image = try await ImageLoader.shared.image(path: viewModel.movieDetail?.poster_path ?? "")
             phase = .success(image)
         } catch {
             phase = .failure
@@ -55,5 +51,5 @@ struct HeroHeader: View {
 }
 
 #Preview {
-    HeroHeader(imagePath: "/oQRgyQCzcyZvE6w5heM9ktVY0LT.jpg")
+    HeroHeader()
 }
