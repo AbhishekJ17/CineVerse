@@ -105,6 +105,9 @@ struct MovieListView: View {
                         }
                         .padding(.horizontal)
                     }
+                    .refreshable {
+                        viewModel.fetchAllSections()
+                    }
                 }
             }
             .navigationTitle(CineVerseText.cineVerseTitle)
