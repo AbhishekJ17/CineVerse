@@ -34,7 +34,7 @@ struct MovieListView: View {
             ZStack(alignment: .top) {
                 BackgroundView()
                 if viewModel.isLoading {
-                    ProgressView()
+                    Loader()
                 }else {
                     ScrollView {
                         LazyVStack(alignment: .leading) {
