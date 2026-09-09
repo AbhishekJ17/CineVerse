@@ -40,10 +40,11 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
         fetchAllSections()
     }
 
+    @MainActor
     func fetchAllSections() {
         Task {
-           await withTaskGroup(of: MovieSectionCategory.self) { group in
-               self.isLoading = true
+            self.isLoading = true
+            await withTaskGroup(of: MovieSectionCategory.self) { group in
                 for category in MovieCategory.allCases {
                     group.addTask { [movieListUseCase] in
                         do {
@@ -57,30 +58,36 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                     }
                 }
 
-                for await movieList in group {
-                    switch movieList.response {
+                for await sectionResult in group {
+                    let category = sectionResult.category
+
+                    switch sectionResult.response {
                     case .success(let response):
-                        self.movieList[movieList.category] = response?.results
-                        self.pagination[movieList.category] = (response?.page ?? 0) + 1
-                        self.hasMorePages[movieList.category] = response?.page ?? 0 < response?.total_pages ?? 0
-                        self.isLoadingPage[movieList.category] = false
-                        self.isLoading = false
+                        if let response {
+                            self.movieList[category] = response.results
+                            self.pagination[category] = Int32(response.page + 1)
+                            self.hasMorePages[category] = response.page < response.total_pages
+                        }
                     case .failure(let error):
-                        print("\(movieList.category) -- \(error)")
+                        debugPrint("\(category) -- \(error)")
                         self.errorMessage = error.message
                     }
+                    self.isLoadingPage[category] = false
                 }
             }
+            self.isLoading = false
         }
     }
 
+    @MainActor
     func loadNextPageFor(category: MovieCategory) {
-        guard !(isLoadingPage[category] ?? false) && hasMorePages[category] ?? false else {
-            return
-        }
+        let isAlreadyLoading = isLoadingPage[category] ?? false
+        let canLoadMore = hasMorePages[category] ?? false
+
+        guard !isAlreadyLoading && canLoadMore else { return }
 
         isLoadingPage[category] = true
-        let currentPage = Int(pagination[category] ?? 0)
+        let currentPage = Int(pagination[category] ?? 1)
 
         paginationTask?.cancel()
 
@@ -90,9 +97,12 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
                 guard !Task.isCancelled else { return }
 
-                self.movieList[category]?.append(contentsOf: movieList?.results ?? [])
-                self.hasMorePages[category] = movieList?.page ?? 0 < movieList?.total_pages ?? 0
-                self.pagination[category]! += 1
+                if let movieList {
+                    self.movieList[category, default: []].append(contentsOf: movieList.results)
+                    self.hasMorePages[category] = movieList.page < movieList.total_pages
+                    self.pagination[category] = Int32(movieList.page + 1)
+                }
+                debugPrint("Page: ", self.pagination)
             } catch let error as APIError {
                 self.errorMessage = error.message
             } catch {
