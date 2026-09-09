@@ -13,16 +13,16 @@ struct MovieListView: View {
     @StateObject var viewModel: DefaultMovieListViewModel
     @State var selectedMovie: Movie?
     let rows: [GridItem] = [
-        GridItem(.flexible(), spacing: 20, alignment: nil)
+        GridItem(.flexible(), spacing: 10, alignment: nil)
     ]
     let topRatedRows: [GridItem] = [
-        GridItem(.flexible(), spacing: 20, alignment: nil),
-        GridItem(.flexible(), spacing: 20, alignment: nil),
-        GridItem(.flexible(), spacing: 20, alignment: nil)
+        GridItem(.flexible(), spacing: 10, alignment: nil),
+        GridItem(.flexible(), spacing: 10, alignment: nil),
+        GridItem(.flexible(), spacing: 10, alignment: nil)
     ]
     let upcomingRows: [GridItem] = [
-        GridItem(.flexible(), spacing: 20, alignment: nil),
-        GridItem(.flexible(), spacing: 20, alignment: nil)
+        GridItem(.flexible(), spacing: 10, alignment: nil),
+        GridItem(.flexible(), spacing: 10, alignment: nil)
     ]
 
     init(viewModel: DefaultMovieListViewModel) {
@@ -55,7 +55,7 @@ struct MovieListView: View {
                                         }
                                         .scrollTargetLayout()
                                 }
-                                //.scrollTargetBehavior(.paging)
+                                .scrollTargetBehavior(.viewAligned)
                                 .scrollBounceBehavior(.basedOnSize)
                                 .onScrollGeometryChange(for: Bool.self) { geometry in
                                     guard geometry.contentSize.width > 0 else { return false }

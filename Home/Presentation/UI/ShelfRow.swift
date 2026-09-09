@@ -14,6 +14,7 @@ struct ShelfRow: View {
         VStack(alignment: .leading, spacing: 5) {
             ShelfImage(path: movie.backdrop_path)
             ShelfMetadataView(title: movie.title, rating: movie.vote_average)
+                .frame(width: 180, alignment: .leading)
         }
         .onTapGesture {
             onSelect()

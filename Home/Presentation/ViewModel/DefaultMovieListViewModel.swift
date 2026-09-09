@@ -42,6 +42,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     @MainActor
     func fetchAllSections() {
+        pagination = [:]
         Task {
             self.isLoading = true
             await withTaskGroup(of: MovieSectionCategory.self) { group in
