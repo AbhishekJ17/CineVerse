@@ -28,7 +28,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     @Published var errorMessage: String = ""
     @Published var isLoadingPage: [MovieCategory : Bool] = [:]
 
-    private(set) var pagination: [MovieCategory : Int32] = [:]
+    private(set) var pagination: [MovieCategory : Int] = [:]
     private(set) var hasMorePages: [MovieCategory: Bool] = [:]
     private var paginationTask: Task<Void, Never>?
 
@@ -65,7 +65,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                     case .success(let response):
                         if let response {
                             self.movieList[category] = response.results
-                            self.pagination[category] = Int32(response.page + 1)
+                            self.pagination[category] = response.page + 1
                             self.hasMorePages[category] = response.page < response.total_pages
                         }
                     case .failure(let error):
@@ -87,7 +87,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
         guard !isAlreadyLoading && canLoadMore else { return }
 
         isLoadingPage[category] = true
-        let currentPage = Int(pagination[category] ?? 1)
+        let currentPage = pagination[category] ?? 1
 
         paginationTask?.cancel()
 
@@ -100,7 +100,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                 if let movieList {
                     self.movieList[category, default: []].append(contentsOf: movieList.results)
                     self.hasMorePages[category] = movieList.page < movieList.total_pages
-                    self.pagination[category] = Int32(movieList.page + 1)
+                    self.pagination[category] = movieList.page + 1
                 }
                 debugPrint("Page: ", self.pagination)
             } catch let error as APIError {

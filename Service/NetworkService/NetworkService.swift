@@ -41,11 +41,13 @@ final actor APIClient: NetworkService {
             url: baseURL.appending(path: endPoint.path),
             resolvingAgainstBaseURL: true
         )
+
+        component?.queryItems = endPoint.queryItems
+        
         guard let url = component?.url else {
             throw APIError.invalidURL
         }
-        component?.queryItems = endPoint.queryItems
-        debugPrint("Parameters: ", component?.queryItems)
+
         var request = URLRequest(url: url)
         request.httpMethod = endPoint.method.rawValue
         request.timeoutInterval = 10

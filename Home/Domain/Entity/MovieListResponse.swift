@@ -6,7 +6,7 @@
 //
 
 struct MovieListResponse: Decodable {
-    var page: Int32
+    var page: Int
     var total_pages: Int32
     var total_results: Int32
     var results: [Movie]
