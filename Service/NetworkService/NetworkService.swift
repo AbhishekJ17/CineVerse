@@ -45,7 +45,7 @@ final actor APIClient: NetworkService {
             throw APIError.invalidURL
         }
         component?.queryItems = endPoint.queryItems
-
+        debugPrint("Parameters: ", component?.queryItems)
         var request = URLRequest(url: url)
         request.httpMethod = endPoint.method.rawValue
         request.timeoutInterval = 10

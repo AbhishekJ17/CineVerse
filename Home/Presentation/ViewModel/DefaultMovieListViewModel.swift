@@ -10,7 +10,7 @@ import Combine
 
 protocol MovieListViewModelInput {
     func fetchAllSections()
-    func fetchMoviesFor(category: MovieCategory, withPage: Int)
+    func loadNextPageFor(category: MovieCategory)
 }
 
 protocol MovieListViewModelOutput {
@@ -25,7 +25,12 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     @Published var movieList: [MovieCategory : [Movie]] = [:]
     @Published var isLoading: Bool = false
-    var errorMessage: String = ""
+    @Published var errorMessage: String = ""
+    @Published var isLoadingPage: [MovieCategory : Bool] = [:]
+
+    private(set) var pagination: [MovieCategory : Int32] = [:]
+    private(set) var hasMorePages: [MovieCategory: Bool] = [:]
+    private var paginationTask: Task<Void, Never>?
 
     private let repository: MovieListRepository = DefaultMovieListRepository()
     let movieListUseCase: MovieListUseCase
@@ -56,26 +61,45 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                     switch movieList.response {
                     case .success(let response):
                         self.movieList[movieList.category] = response?.results
+                        self.pagination[movieList.category] = (response?.page ?? 0) + 1
+                        self.hasMorePages[movieList.category] = response?.page ?? 0 < response?.total_pages ?? 0
+                        self.isLoadingPage[movieList.category] = false
                         self.isLoading = false
                     case .failure(let error):
                         print("\(movieList.category) -- \(error)")
+                        self.errorMessage = error.message
                     }
                 }
             }
         }
     }
 
-    func fetchMoviesFor(category: MovieCategory, withPage: Int) {
-        Task {
+    func loadNextPageFor(category: MovieCategory) {
+        guard !(isLoadingPage[category] ?? false) && hasMorePages[category] ?? false else {
+            return
+        }
+
+        isLoadingPage[category] = true
+        let currentPage = Int(pagination[category] ?? 0)
+
+        paginationTask?.cancel()
+
+        paginationTask = Task {
             do {
-                let (movieList) = try await movieListUseCase.fetchMovieListFor(category: category, page: withPage)
-                self.movieList[category] = movieList?.results
-                return MovieSectionCategory(category: category, response: .success(movieList))
+                let (movieList) = try await movieListUseCase.fetchMovieListFor(category: category, page: currentPage)
+
+                guard !Task.isCancelled else { return }
+
+                self.movieList[category]?.append(contentsOf: movieList?.results ?? [])
+                self.hasMorePages[category] = movieList?.page ?? 0 < movieList?.total_pages ?? 0
+                self.pagination[category]! += 1
             } catch let error as APIError {
-                return MovieSectionCategory(category: category, response: .failure(error))
+                self.errorMessage = error.message
             } catch {
-                return MovieSectionCategory(category: category, response: .failure(.unknown))
+                self.errorMessage = error.localizedDescription
             }
+
+            isLoadingPage[category] = false
         }
     }
 
