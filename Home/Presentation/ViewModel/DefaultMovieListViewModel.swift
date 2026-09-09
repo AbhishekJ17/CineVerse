@@ -15,7 +15,7 @@ protocol MovieListViewModelInput {
 
 protocol MovieListViewModelOutput {
     var movieList: [MovieCategory: [Movie]] { get set }
-    var errorMessage: String { get set }
+    var errorMessage: [MovieCategory: String] { get set }
     var isLoading: Bool { get set }
 }
 
@@ -25,7 +25,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
     @Published var movieList: [MovieCategory : [Movie]] = [:]
     @Published var isLoading: Bool = false
-    @Published var errorMessage: String = ""
+    @Published var errorMessage: [MovieCategory: String] = [:]
     @Published var isLoadingPage: [MovieCategory : Bool] = [:]
 
     private(set) var pagination: [MovieCategory : Int] = [:]
@@ -69,8 +69,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                             self.hasMorePages[category] = response.page < response.total_pages
                         }
                     case .failure(let error):
-                        debugPrint("\(category) -- \(error)")
-                        self.errorMessage = error.message
+                        self.errorMessage[category] = error.message
                     }
                     self.isLoadingPage[category] = false
                 }
@@ -102,11 +101,10 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                     self.hasMorePages[category] = movieList.page < movieList.total_pages
                     self.pagination[category] = movieList.page + 1
                 }
-                debugPrint("Page: ", self.pagination)
             } catch let error as APIError {
-                self.errorMessage = error.message
+                self.errorMessage[category] = error.message
             } catch {
-                self.errorMessage = error.localizedDescription
+                self.errorMessage[category] = error.localizedDescription
             }
 
             isLoadingPage[category] = false

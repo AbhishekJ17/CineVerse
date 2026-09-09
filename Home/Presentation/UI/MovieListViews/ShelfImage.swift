@@ -12,7 +12,7 @@ struct ShelfImage: View {
 
     var body: some View {
         CineVerseRemoteImage(path: path)
-            .scaledToFit()
+            .scaledToFill()
             .frame(width: 180, height: 180)
             .clipShape(RoundedRectangle(cornerRadius: 15))
     }

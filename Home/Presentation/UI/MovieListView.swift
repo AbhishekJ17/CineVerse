@@ -45,7 +45,7 @@ struct MovieListView: View {
                                 ScrollView(.horizontal) {
                                     LazyHGrid(
                                         rows: rows,
-                                        spacing: 20,
+                                        spacing: 10,
                                         pinnedViews: [.sectionHeaders]) {
                                             ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movie in
                                                 HeroStoryCard(movie: movie) {
