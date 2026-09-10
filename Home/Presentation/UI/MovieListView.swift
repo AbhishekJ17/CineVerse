@@ -37,42 +37,7 @@ struct MovieListView: View {
                     Loader()
                 }else {
                     ScrollView {
-                        LazyVStack(alignment: .leading) {
-                            SectionHeadline(headline: MovieCategory.nowPlaying.name)
-                            if viewModel.isLoadingPage[.nowPlaying] ?? false {
-                                Loader()
-                            }else {
-                                ScrollView(.horizontal) {
-                                    LazyHGrid(
-                                        rows: rows,
-                                        spacing: 10,
-                                        pinnedViews: [.sectionHeaders]) {
-                                            ForEach(viewModel.getMovieListFrom(category: .nowPlaying)) { movie in
-                                                HeroStoryCard(movie: movie) {
-                                                    selectedMovie = movie
-                                                }
-                                            }
-                                        }
-                                        .scrollTargetLayout()
-                                }
-                                .scrollTargetBehavior(.viewAligned)
-                                .scrollBounceBehavior(.basedOnSize)
-                                .onScrollGeometryChange(for: Bool.self) { geometry in
-                                    guard geometry.contentSize.width > 0 else { return false }
-
-                                    let maxOffset = geometry.contentSize.width - geometry.containerSize.width
-                                    let currentOffset = geometry.contentOffset.x
-                                    let triggeredDistance: CGFloat = 100
-                                    return currentOffset >= (maxOffset - triggeredDistance)
-                                } action: { wasNearBottom, isNearBottom in
-                                    guard isNearBottom else { return }
-                                    if isNearBottom && !wasNearBottom {
-                                        viewModel.loadNextPageFor(category: .nowPlaying)
-                                    }
-                                }
-                            }
-                        }
-                        .padding(.horizontal)
+                        HomeRowView(movieCategory: .nowPlaying, rows: rows, spacing: 10)
 
                         LazyVStack(alignment: .leading) {
                             SectionHeadline(headline: MovieCategory.upcoming.name)
@@ -195,6 +160,7 @@ struct MovieListView: View {
                 MovieDetailScreenBuilder.openMovieDetail(id: movie.id)
             }
         }
+        .environmentObject(viewModel)
     }
 }
 
