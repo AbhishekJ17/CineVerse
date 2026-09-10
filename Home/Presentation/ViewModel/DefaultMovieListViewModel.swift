@@ -40,9 +40,15 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
         fetchAllSections()
     }
 
+    private func resetPages() {
+        movieList = [:]
+        pagination = [:]
+        hasMorePages = [:]
+        isLoadingPage = [:]
+    }
+
     @MainActor
     func fetchAllSections() {
-        pagination = [:]
         Task {
             self.isLoading = true
             await withTaskGroup(of: MovieSectionCategory.self) { group in
@@ -58,7 +64,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                         }
                     }
                 }
-
+                self.resetPages()
                 for await sectionResult in group {
                     let category = sectionResult.category
 
