@@ -13,11 +13,18 @@ struct HomeRowView: View {
     var movieCategory: MovieCategory
     var rows: [GridItem] = []
     var spacing: CGFloat = 10
+    private var movies: [Movie] {
+        viewModel.getMovieListFrom(category: movieCategory)
+    }
+    private var isLoading: Bool {
+        viewModel.isLoadingPage[movieCategory] ?? false
+    }
 
     var body: some View {
         LazyVStack(alignment: .leading) {
             SectionHeadline(headline: movieCategory.name)
-            if viewModel.isLoadingPage[movieCategory] ?? false {
+
+            if isLoading && movies.isEmpty {
                 Loader()
             }else {
                 ScrollView(.horizontal) {
@@ -25,10 +32,30 @@ struct HomeRowView: View {
                         rows: rows,
                         spacing: spacing,
                         pinnedViews: [.sectionHeaders]) {
-                            ForEach(viewModel.getMovieListFrom(category: movieCategory)) { movie in
-                                HeroStoryCard(movie: movie) {
-                                    selectedMovie = movie
+
+                            ForEach(movies) { movie in
+                                switch movieCategory {
+                                    case .nowPlaying:
+                                        HeroStoryCard(movie: movie) {
+                                            selectedMovie = movie
+                                        }
+                                    case .popular:
+                                        BannerShelfRow(movie: movie) {
+                                            selectedMovie = movie
+                                        }
+                                    case .topRated:
+                                        ShelfRow(movie: movie) {
+                                            selectedMovie = movie
+                                        }
+                                    case .upcoming:
+                                        BannerShelfRow(movie: movie) {
+                                            selectedMovie = movie
+                                        }
                                 }
+                            }
+                            if isLoading && !movies.isEmpty {
+                                Loader()
+                                    .frame(maxHeight: .infinity)
                             }
                         }
                         .scrollTargetLayout()
