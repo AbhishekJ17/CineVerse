@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 protocol MovieListViewModelInput {
+    var searchText: String { get set }
+    var isSearchPresented: Bool { get set }
     func fetchAllSections()
     func loadNextPageFor(category: MovieCategory)
 }
@@ -27,6 +29,12 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     @Published var isLoading: Bool = false
     @Published var errorMessage: [MovieCategory: String] = [:]
     @Published var isLoadingPage: [MovieCategory : Bool] = [:]
+    @Published var searchText: String = "" {
+        didSet {
+            searchMovies()
+        }
+    }
+    @Published var isSearchPresented: Bool = false
 
     private(set) var pagination: [MovieCategory : Int] = [:]
     private(set) var hasMorePages: [MovieCategory: Bool] = [:]
@@ -45,6 +53,11 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
         pagination = [:]
         hasMorePages = [:]
         isLoadingPage = [:]
+    }
+
+    private func searchMovies() {
+        debugPrint("query: ", searchText)
+        debugPrint("Is CineVerse searching: ", isSearchPresented)
     }
 
     @MainActor

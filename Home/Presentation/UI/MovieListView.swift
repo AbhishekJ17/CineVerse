@@ -48,6 +48,12 @@ struct MovieListView: View {
             }
             .navigationTitle(CineVerseText.cineVerseTitle)
         }
+        .searchable(
+            text: $viewModel.searchText,
+            isPresented: $viewModel.isSearchPresented,
+            placement: .navigationBarDrawer,
+            prompt: "Search Movies in CineVerse"
+        )
         .environmentObject(viewModel)
     }
 }
