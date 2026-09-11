@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct SearchMovieCard: View {
+    var path: String
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        CineVerseRemoteImage(path: path)
+            .scaledToFill()
+            .frame(height: 180)
+            .clipShape(RoundedRectangle(cornerRadius: 25))
     }
 }
 
 #Preview {
-    SearchMovieCard()
+    SearchMovieCard(path: "/2VK4d3mqqTc7LVZLnLPeRiPaJ71.jpg")
 }

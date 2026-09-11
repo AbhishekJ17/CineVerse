@@ -35,14 +35,18 @@ struct MovieListView: View {
                 if viewModel.isLoading {
                     Loader()
                 }else {
-                    ScrollView {
-                        HomeRowView(movieCategory: .nowPlaying, rows: rows, spacing: 10)
-                        HomeRowView(movieCategory: .upcoming, rows: upcomingRows, spacing: 10)
-                        HomeRowView(movieCategory: .topRated, rows: topRatedRows, spacing: 10)
-                        HomeRowView(movieCategory: .popular, rows: rows, spacing: 10)
-                    }
-                    .refreshable {
-                        viewModel.fetchAllSections()
+                    if viewModel.searchText.isEmpty {
+                        ScrollView {
+                            HomeRowView(movieCategory: .nowPlaying, rows: rows, spacing: 10)
+                            HomeRowView(movieCategory: .upcoming, rows: upcomingRows, spacing: 10)
+                            HomeRowView(movieCategory: .topRated, rows: topRatedRows, spacing: 10)
+                            HomeRowView(movieCategory: .popular, rows: rows, spacing: 10)
+                        }
+                        .refreshable {
+                            viewModel.fetchAllSections()
+                        }
+                    }else {
+                        SearchMovies()
                     }
                 }
             }
@@ -63,10 +67,7 @@ struct MovieListView: View {
     let repository: MovieListRepository = DefaultMovieListRepository()
     let useCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
     let searchUseCase: MovieSearchUseCase = DefaultMovieSearchUseCase(repository: repository)
-    let viewModel = DefaultMovieListViewModel(
-        movieListUseCase: useCase,
-        movieSearchUseCase: searchUseCase
-    )
+    let viewModel = DefaultMovieListViewModel(movieListUseCase: useCase, movieSearchUseCase: searchUseCase)
     MovieListView(viewModel: viewModel)
 }
 #endif

@@ -17,6 +17,7 @@ protocol MovieListViewModelInput {
 
 protocol MovieListViewModelOutput {
     var movieList: [MovieCategory: [Movie]] { get set }
+    var searchMovieList: [Movie] { get set }
     var errorMessage: [MovieCategory: String] { get set }
     var isLoading: Bool { get set }
 }
@@ -25,10 +26,15 @@ typealias MovieListViewModel = MovieListViewModelInput & MovieListViewModelOutpu
 
 final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
 
+    enum LoadingState {
+        case home, search, loading
+    }
+
     @Published var movieList: [MovieCategory : [Movie]] = [:]
     @Published var isLoading: Bool = false
     @Published var errorMessage: [MovieCategory: String] = [:]
     @Published var isLoadingPage: [MovieCategory : Bool] = [:]
+    @Published var searchMovieList: [Movie] = []
     @Published var searchText: String = "" {
         didSet {
             searchMovies()
@@ -89,6 +95,7 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                             self.movieList[category] = response.results
                             self.pagination[category] = response.page + 1
                             self.hasMorePages[category] = response.page < response.total_pages
+                            self.searchMovieList = response.results
                         }
                     case .failure(let error):
                         self.errorMessage[category] = error.message

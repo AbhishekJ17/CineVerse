@@ -32,7 +32,6 @@ struct HomeRowView: View {
                         rows: rows,
                         spacing: spacing,
                         pinnedViews: [.sectionHeaders]) {
-
                             ForEach(movies) { movie in
                                 switch movieCategory {
                                     case .nowPlaying:
