@@ -62,7 +62,11 @@ struct MovieListView: View {
 #Preview {
     let repository: MovieListRepository = DefaultMovieListRepository()
     let useCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
-    let viewModel = DefaultMovieListViewModel(movieListUseCase: useCase)
+    let searchUseCase: MovieSearchUseCase = DefaultMovieSearchUseCase(repository: repository)
+    let viewModel = DefaultMovieListViewModel(
+        movieListUseCase: useCase,
+        movieSearchUseCase: searchUseCase
+    )
     MovieListView(viewModel: viewModel)
 }
 #endif

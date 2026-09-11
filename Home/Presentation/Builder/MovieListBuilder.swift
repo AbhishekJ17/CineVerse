@@ -11,8 +11,12 @@ struct MovieListScreenBuilder {
 
     static func makeView() -> MovieListView {
         let repository: MovieListRepository = DefaultMovieListRepository()
-        let useCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
-        let viewModel = DefaultMovieListViewModel(movieListUseCase: useCase)
+        let listUseCase: MovieListUseCase = DefaultMovieListUseCase(repository: repository)
+        let searchUseCase: MovieSearchUseCase = DefaultMovieSearchUseCase(repository: repository)
+        let viewModel = DefaultMovieListViewModel(
+            movieListUseCase: listUseCase,
+            movieSearchUseCase: searchUseCase
+        )
         return MovieListView(viewModel: viewModel)
     }
 }

@@ -41,10 +41,12 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     private var paginationTask: Task<Void, Never>?
 
     private let repository: MovieListRepository = DefaultMovieListRepository()
-    let movieListUseCase: MovieListUseCase
+    private let movieListUseCase: MovieListUseCase
+    private let movieSearchUseCase: MovieSearchUseCase
 
-    init(movieListUseCase: MovieListUseCase) {
+    init(movieListUseCase: MovieListUseCase, movieSearchUseCase: MovieSearchUseCase) {
         self.movieListUseCase = movieListUseCase
+        self.movieSearchUseCase = movieSearchUseCase
         fetchAllSections()
     }
 
