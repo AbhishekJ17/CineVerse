@@ -13,6 +13,7 @@ enum MovieEndPoints: APIEndPoint {
     case upcoming(page: Int)
     case popular(page: Int)
     case nowPlaying(page: Int)
+    case searchMovie(query: String, page: Int)
 
     var path: String {
         switch self {
@@ -20,6 +21,7 @@ enum MovieEndPoints: APIEndPoint {
             case .upcoming(_): return "movie/upcoming"
             case .popular(_): return "movie/popular"
             case .nowPlaying(_): return "movie/now_playing"
+            case .searchMovie(_,_): return "search/movie"
         }
     }
 
@@ -33,6 +35,11 @@ enum MovieEndPoints: APIEndPoint {
         case .upcoming(page: let page): return [URLQueryItem(name: "page", value: "\(page)")]
         case .popular(page: let page): return [URLQueryItem(name: "page", value: "\(page)")]
         case .nowPlaying(page: let page): return [URLQueryItem(name: "page", value: "\(page)")]
+        case .searchMovie(query: let query, page: let page):
+            return [
+                URLQueryItem(name: "page", value: "\(page)"),
+                URLQueryItem(name: "query", value: query)
+            ]
         }
     }
 
