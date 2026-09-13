@@ -24,7 +24,7 @@ struct SearchMovies: View {
                 spacing: spacing,
                 pinnedViews: []) {
                     ForEach(viewModel.searchMovieList) { movie in
-                        SearchMovieCard(path: movie.backdrop_path)
+                        SearchMovieCard(path: movie.backdrop_path ?? "")
                     }
                 }
         }

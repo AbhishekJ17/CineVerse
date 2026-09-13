@@ -37,7 +37,9 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     @Published var searchMovieList: [Movie] = []
     @Published var searchText: String = "" {
         didSet {
-            searchMovies()
+            if !searchText.isEmpty {
+                searchMovies()
+            }
         }
     }
     @Published var isSearchPresented: Bool = false
@@ -66,6 +68,18 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
     private func searchMovies() {
         debugPrint("query: ", searchText)
         debugPrint("Is CineVerse searching: ", isSearchPresented)
+        Task {
+            self.isLoading = true
+            do {
+                let movieListResponse = try await movieSearchUseCase.searchMovies(query: searchText, page: 1)
+                if let movieListResponse {
+                    self.searchMovieList = movieListResponse.results
+                }
+            } catch {
+
+            }
+            self.isLoading = false
+        }
     }
 
     @MainActor
@@ -95,7 +109,6 @@ final class DefaultMovieListViewModel: MovieListViewModel, ObservableObject {
                             self.movieList[category] = response.results
                             self.pagination[category] = response.page + 1
                             self.hasMorePages[category] = response.page < response.total_pages
-                            self.searchMovieList = response.results
                         }
                     case .failure(let error):
                         self.errorMessage[category] = error.message
